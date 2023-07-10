@@ -1,4 +1,4 @@
-export type team = {
+export type Team = {
     name: string,
     memberCount?: number,
     joinAt: string,

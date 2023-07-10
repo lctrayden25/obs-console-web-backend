@@ -11,3 +11,5 @@ const teamController_1 = require("../controller/teamController");
 router.get("/get-team-list", teamController_1.getTeamList);
 router.get("/get-team-count", teamController_1.getTeamCount);
 router.post("/create-team", teamController_1.createTeam);
+router.get("/get-team/:id", teamController_1.getTeam);
+router.post("/edit-team/:id", teamController_1.getTeam);
