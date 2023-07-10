@@ -1,9 +1,14 @@
 import express, { Express, Request, Response } from "express";
 import dotenv from "dotenv";
 import cors from "cors";
-import { defaultData, Person } from "./mock/mockData";
+import bodyParser from "body-parser";
+// import { defaultData, Person } from "./mock/mockData";
+import database from "./config/Database";
+
+import { teamRouter } from "./router/teamRouter";
 
 dotenv.config();
+database();
 
 const app: Express = express();
 
@@ -14,27 +19,31 @@ const corsOptions = {
 };
 
 app.use(cors(corsOptions));
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: false }));
 
 app.get("/", (req: Request, res: Response) => {
-	return res.json("home");
+	return res.json("Homepage");
 });
 
-app.get("/team-list", (req: Request, res: Response) => {
-	const { page, limit } = req.query as any;
+app.use("/team", teamRouter);
 
-	const startIndex = (page - 1) * limit;
-	const endIndex = page * limit;
+// app.get("/team-list", (req: Request, res: Response) => {
+// 	const { page, limit, team, member } = req.query as any;
 
-	const list = defaultData.slice(startIndex, endIndex);
+// 	const startIndex = (page - 1) * limit;
+// 	const endIndex = page * limit;
 
-	return res.json(list);
-});
+// 	const list = defaultData.slice(startIndex, endIndex);
 
-app.get("/team-count", (req: Request, res: Response) => {
-	const list = defaultData.length;
+// 	return res.json(list);
+// });
 
-	return res.json(list);
-});
+// app.get("/team-count", (req: Request, res: Response) => {
+// 	const list = defaultData.length;
+
+// 	return res.json(list);
+// });
 
 app.listen(9000, () => {
 	console.log(`⚡️[server]: Server is running at http://localhost:${9000}`);
