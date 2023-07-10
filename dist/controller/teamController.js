@@ -14,17 +14,17 @@ const teamSchema_1 = require("../model/teamSchema");
 const getTeamList = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     const getTeamList = yield teamSchema_1.Team.find();
     if (!getTeamList) {
-        return res.status(502).json({ message: "Internal Server Error" });
+        return res.status(502).json({ message: "Internal Server Error" }).end();
     }
-    return res.status(200).json(getTeamList);
+    return res.status(200).json(getTeamList).end();
 });
 exports.getTeamList = getTeamList;
 const getTeamCount = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     const getTeamList = yield teamSchema_1.Team.find();
     if (!getTeamList) {
-        return res.status(404).json({ message: "No List Found." });
+        return res.status(404).json({ message: "No List Found." }).end();
     }
-    return res.status(200).json(getTeamList === null || getTeamList === void 0 ? void 0 : getTeamList.length);
+    return res.status(200).json(getTeamList === null || getTeamList === void 0 ? void 0 : getTeamList.length).end();
 });
 exports.getTeamCount = getTeamCount;
 const createTeam = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
@@ -32,7 +32,7 @@ const createTeam = (req, res, next) => __awaiter(void 0, void 0, void 0, functio
     if (!name || !memberCount)
         return res
             .status(502)
-            .json({ message: "name or memberCount not provieded." });
+            .json({ message: "name or memberCount not provieded." }).end();
     const createData = {
         name,
         memberCount,
@@ -41,19 +41,19 @@ const createTeam = (req, res, next) => __awaiter(void 0, void 0, void 0, functio
     };
     const create = yield teamSchema_1.Team.create(createData);
     if (!create)
-        return res.status(502).json({ message: "Internal Server Error" });
-    return res.status(200).json({ message: "Team Created." });
+        return res.status(502).json({ message: "Internal Server Error" }).end();
+    return res.status(200).json({ message: "Team Created." }).end();
 });
 exports.createTeam = createTeam;
 const getTeam = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     var _a;
     const teamId = yield ((_a = req.params) === null || _a === void 0 ? void 0 : _a.id);
     if (!teamId)
-        return res.status(502).json({ error: "TeamId No Found Or Missing." });
+        return res.status(502).json({ error: "TeamId No Found Or Missing." }).end();
     const getTeam = yield teamSchema_1.Team.findById(teamId);
     if (!getTeam)
-        return res.status(404).json({ error: `Team With ID ${teamId} Found` });
-    return res.status(200).json(getTeam);
+        return res.status(404).json({ error: `Team With ID ${teamId} Found` }).end();
+    return res.status(200).json(getTeam).end();
 });
 exports.getTeam = getTeam;
 const editTeam = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {

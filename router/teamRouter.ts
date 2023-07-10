@@ -1,4 +1,4 @@
-import express, { Express, Request, Response } from "express";
+import express, { Express, NextFunction, Request, Response } from "express";
 const router = express.Router();
 
 import { getTeamList, getTeamCount, createTeam, getTeam } from "../controller/teamController";
