@@ -28,13 +28,7 @@ const getTeamCount = (req, res, next) => __awaiter(void 0, void 0, void 0, funct
 });
 exports.getTeamCount = getTeamCount;
 const createTeam = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
-    const data = {
-        name: "obs",
-        memberCount: 12,
-        joinAt: 1688969755,
-        updatedBy: "Rayden Li",
-    };
-    yield teamSchema_1.Team.create(data);
+    const { name, memberCount } = yield req.body;
     return res.json("create team");
 });
 exports.createTeam = createTeam;

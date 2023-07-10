@@ -32,12 +32,7 @@ export const createTeam = async (
 	res: Response,
 	next: NextFunction
 ) => {
-	const data = {
-		name: "obs",
-		memberCount: 12,
-		joinAt: 1688969755,
-		updatedBy: "Rayden Li",
-	};
-	await Team.create(data);
+	const { name, memberCount } = await req.body;
+
 	return res.json("create team");
 };
