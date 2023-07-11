@@ -37,7 +37,8 @@ export const createTeam = async (
 	if (!name || !memberCount)
 		return res
 			.status(502)
-			.json({ message: "name or memberCount not provieded." }).end();
+			.json({ message: "name or memberCount not provieded." })
+			.end();
 
 	const createData = {
 		name,
@@ -67,7 +68,10 @@ export const getTeam = async (
 	const getTeam = await Team.findById(teamId);
 
 	if (!getTeam)
-		return res.status(404).json({ error: `Team With ID ${teamId} Found` }).end();
+		return res
+			.status(404)
+			.json({ error: `Team With ID ${teamId} Found` })
+			.end();
 
 	return res.status(200).json(getTeam).end();
 };

@@ -32,7 +32,8 @@ const createTeam = (req, res, next) => __awaiter(void 0, void 0, void 0, functio
     if (!name || !memberCount)
         return res
             .status(502)
-            .json({ message: "name or memberCount not provieded." }).end();
+            .json({ message: "name or memberCount not provieded." })
+            .end();
     const createData = {
         name,
         memberCount,
@@ -52,7 +53,10 @@ const getTeam = (req, res, next) => __awaiter(void 0, void 0, void 0, function* 
         return res.status(502).json({ error: "TeamId No Found Or Missing." }).end();
     const getTeam = yield teamSchema_1.Team.findById(teamId);
     if (!getTeam)
-        return res.status(404).json({ error: `Team With ID ${teamId} Found` }).end();
+        return res
+            .status(404)
+            .json({ error: `Team With ID ${teamId} Found` })
+            .end();
     return res.status(200).json(getTeam).end();
 });
 exports.getTeam = getTeam;
