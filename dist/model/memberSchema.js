@@ -15,7 +15,11 @@ const memberSchema = new Schema({
         type: String,
         require: true,
     },
-    age: {
+    phone: {
+        type: String,
+        require: true,
+    },
+    email: {
         type: String,
     },
     dateOfBirth: {
@@ -33,4 +37,3 @@ const memberSchema = new Schema({
     timestamps: true,
 });
 exports.Member = mongoose_1.default.model("Member", memberSchema);
-// module.exports = Member;

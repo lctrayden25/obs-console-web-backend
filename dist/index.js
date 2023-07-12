@@ -7,11 +7,10 @@ const express_1 = __importDefault(require("express"));
 const dotenv_1 = __importDefault(require("dotenv"));
 const cors_1 = __importDefault(require("cors"));
 const body_parser_1 = __importDefault(require("body-parser"));
-// import { defaultData, Person } from "./mock/mockData";
 const Database_1 = __importDefault(require("./config/Database"));
 const teamRouter_1 = require("./router/teamRouter");
+const memberRouter_1 = require("./router/memberRouter");
 dotenv_1.default.config();
-(0, Database_1.default)();
 const app = (0, express_1.default)();
 const corsOptions = {
     origin: ["http://localhost:3000"],
@@ -25,17 +24,16 @@ app.get("/", (req, res) => {
     return res.json("Homepage");
 });
 app.use("/team", teamRouter_1.teamRouter);
-// app.get("/team-list", (req: Request, res: Response) => {
-// 	const { page, limit, team, member } = req.query as any;
-// 	const startIndex = (page - 1) * limit;
-// 	const endIndex = page * limit;
-// 	const list = defaultData.slice(startIndex, endIndex);
-// 	return res.json(list);
-// });
-// app.get("/team-count", (req: Request, res: Response) => {
-// 	const list = defaultData.length;
-// 	return res.json(list);
-// });
-app.listen(9000, () => {
-    console.log(`⚡️[server]: Server is running at http://localhost:${9000}`);
-});
+app.use("/member", memberRouter_1.memberRouter);
+const serverConnect = () => {
+    try {
+        app.listen(9000, () => {
+            (0, Database_1.default)();
+            console.log(`⚡️[server]: Server is running at http://localhost:${9000}`);
+        });
+    }
+    catch (error) {
+        console.log(error);
+    }
+};
+serverConnect();

@@ -2,14 +2,12 @@ import express, { Express, Request, Response } from "express";
 import dotenv from "dotenv";
 import cors from "cors";
 import bodyParser from "body-parser";
-// import { defaultData, Person } from "./mock/mockData";
 import database from "./config/Database";
 
 import { teamRouter } from "./router/teamRouter";
+import { memberRouter } from "./router/memberRouter";
 
 dotenv.config();
-database();
-
 const app: Express = express();
 
 const corsOptions = {
@@ -27,24 +25,17 @@ app.get("/", (req: Request, res: Response) => {
 });
 
 app.use("/team", teamRouter);
+app.use("/member", memberRouter);
 
-// app.get("/team-list", (req: Request, res: Response) => {
-// 	const { page, limit, team, member } = req.query as any;
+const serverConnect = () => {
+	try {
+		app.listen(9000, () => {
+			database();
+			console.log(`⚡️[server]: Server is running at http://localhost:${9000}`);
+		});
+	} catch (error) {
+		console.log(error);
+	}
+};
 
-// 	const startIndex = (page - 1) * limit;
-// 	const endIndex = page * limit;
-
-// 	const list = defaultData.slice(startIndex, endIndex);
-
-// 	return res.json(list);
-// });
-
-// app.get("/team-count", (req: Request, res: Response) => {
-// 	const list = defaultData.length;
-
-// 	return res.json(list);
-// });
-
-app.listen(9000, () => {
-	console.log(`⚡️[server]: Server is running at http://localhost:${9000}`);
-});
+serverConnect();

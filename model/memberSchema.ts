@@ -11,7 +11,11 @@ const memberSchema = new Schema(
 			type: String,
 			require: true,
 		},
-		age: {
+		phone: {
+			type: String,
+			require: true,
+		},
+		email: {
 			type: String,
 		},
 		dateOfBirth: {
@@ -32,4 +36,3 @@ const memberSchema = new Schema(
 );
 
 export const Member = mongoose.model("Member", memberSchema);
-// module.exports = Member;
