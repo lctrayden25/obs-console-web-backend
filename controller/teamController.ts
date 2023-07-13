@@ -76,12 +76,23 @@ export const getTeam = async (
 	return res.status(200).json(getTeam).end();
 };
 
-export const editTeam = async (
+export const updateTeam = async (
 	req: Request,
 	res: Response,
 	next: NextFunction
 ) => {
-	const teamId = await req.params?.id;
+	const { id } = req.params;
+	const { name, memberCount } = req.body;
 
-	return res.json(teamId);
+	if (!id)
+		return res.status(404).json({ error: "TeamId No Found Or Missing." }).end();
+
+	const updateTeam = await Team.findByIdAndUpdate(id, { name, memberCount });
+
+	if (!updateTeam)
+		return res.status(500).json({ error: "Internal Server Error" });
+
+	return res
+		.status(200)
+		.json({ message: "Update the team data successfully." });
 };
