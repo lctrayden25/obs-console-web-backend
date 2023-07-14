@@ -15,18 +15,26 @@ const memberSchema = new Schema(
 			type: String,
 			require: true,
 		},
+		gender: {
+			type: String,
+			require: true,
+		},
 		email: {
 			type: String,
 		},
-		dateOfBirth: {
-			type: Date,
+		dateOfYear: {
+			type: Number,
 			require: true,
+		},
+		dateOfMonth: {
+			type: Number,
 		},
 		position: {
 			type: [String],
 		},
 		updatedBy: {
 			type: String,
+			default: "Rayden Li",
 		},
 		team: [{ type: Schema.Types.ObjectId, ref: "Team" }],
 	},
