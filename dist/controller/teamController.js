@@ -12,19 +12,23 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.updateTeam = exports.getTeam = exports.createTeam = exports.getTeamCount = exports.getTeamList = void 0;
 const teamSchema_1 = require("../model/teamSchema");
 const getTeamList = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
+    const { page, limit } = req === null || req === void 0 ? void 0 : req.query;
+    const startIndex = (page - 1) * limit;
+    const endIndex = page * limit;
     const getTeamList = yield teamSchema_1.Team.find();
-    if (!getTeamList) {
+    const result = getTeamList.slice(startIndex, endIndex);
+    if (!result) {
         return res.status(502).json({ message: "Internal Server Error" }).end();
     }
-    return res.status(200).json(getTeamList).end();
+    return res.status(200).json(result).end();
 });
 exports.getTeamList = getTeamList;
 const getTeamCount = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
-    const getTeamList = yield teamSchema_1.Team.find();
-    if (!getTeamList) {
+    const result = yield teamSchema_1.Team.find();
+    if (!result) {
         return res.status(404).json({ message: "No List Found." }).end();
     }
-    return res.status(200).json(getTeamList === null || getTeamList === void 0 ? void 0 : getTeamList.length).end();
+    return res.status(200).json(result === null || result === void 0 ? void 0 : result.length).end();
 });
 exports.getTeamCount = getTeamCount;
 const createTeam = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {

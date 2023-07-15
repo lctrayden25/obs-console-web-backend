@@ -1,30 +1,42 @@
 import express, { Express, Request, Response, NextFunction } from "express";
 import { Team } from "../model/teamSchema";
 
+interface ListTableQuery {
+	page: number;
+	limit: number;
+}
+
 export const getTeamList = async (
-	req: Request,
+	req: Request<{}, {}, {}, ListTableQuery>,
 	res: Response,
 	next: NextFunction
 ) => {
+	const { page, limit } = req?.query;
+
+	const startIndex = (page - 1) * limit;
+	const endIndex = page * limit;
+
 	const getTeamList = await Team.find();
 
-	if (!getTeamList) {
+	const result = getTeamList.slice(startIndex, endIndex);
+
+	if (!result) {
 		return res.status(502).json({ message: "Internal Server Error" }).end();
 	}
-	return res.status(200).json(getTeamList).end();
+	return res.status(200).json(result).end();
 };
 
 export const getTeamCount = async (
-	req: Request,
+	req: Request<{}, {}, {}, ListTableQuery>,
 	res: Response,
 	next: NextFunction
 ) => {
-	const getTeamList = await Team.find();
+	const result = await Team.find();
 
-	if (!getTeamList) {
+	if (!result) {
 		return res.status(404).json({ message: "No List Found." }).end();
 	}
-	return res.status(200).json(getTeamList?.length).end();
+	return res.status(200).json(result?.length).end();
 };
 
 export const createTeam = async (
