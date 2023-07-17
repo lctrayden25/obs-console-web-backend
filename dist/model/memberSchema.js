@@ -15,6 +15,9 @@ const memberSchema = new Schema({
         type: String,
         require: true,
     },
+    nickName: {
+        type: String,
+    },
     phone: {
         type: String,
         require: true,

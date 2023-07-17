@@ -4,6 +4,8 @@ import { Team } from "../model/teamSchema";
 interface ListTableQuery {
 	page: number;
 	limit: number;
+	member: string;
+	team: string;
 }
 
 export const getTeamList = async (
@@ -11,19 +13,22 @@ export const getTeamList = async (
 	res: Response,
 	next: NextFunction
 ) => {
-	const { page, limit } = req?.query;
-
-	const startIndex = (page - 1) * limit;
-	const endIndex = page * limit;
+	const { page, limit, member, team } = req?.query;
 
 	const getTeamList = await Team.find();
 
-	const result = getTeamList.slice(startIndex, endIndex);
+	if (page && limit) {
+		const startIndex = (page - 1) * limit;
+		const endIndex = page * limit;
+		const result = getTeamList.slice(startIndex, endIndex);
 
-	if (!result) {
-		return res.status(502).json({ message: "Internal Server Error" }).end();
+		if (!result) {
+			return res.status(502).json({ message: "Internal Server Error" }).end();
+		}
+		return res.status(200).json(result).end();
+	} else {
+		return res.status(200).json(getTeamList).end();
 	}
-	return res.status(200).json(result).end();
 };
 
 export const getTeamCount = async (
@@ -73,6 +78,7 @@ export const getTeam = async (
 	next: NextFunction
 ) => {
 	const teamId = await req.params?.id;
+	console.log(teamId);
 
 	if (!teamId)
 		return res.status(502).json({ error: "TeamId No Found Or Missing." }).end();
