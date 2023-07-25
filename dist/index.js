@@ -13,7 +13,7 @@ const memberRouter_1 = require("./router/memberRouter");
 dotenv_1.default.config();
 const app = (0, express_1.default)();
 const corsOptions = {
-    origin: ["http://localhost:3000"],
+    origin: ["http://localhost:3000", "http://localhost:3001"],
     methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
     allowedHeaders: ["Content-Type", "Authorization"],
 };
