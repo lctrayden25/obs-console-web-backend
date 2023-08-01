@@ -6,6 +6,7 @@ import database from "./config/Database";
 
 import { teamRouter } from "./router/teamRouter";
 import { memberRouter } from "./router/memberRouter";
+import { adminRouter } from "./router/adminRouter"
 
 dotenv.config();
 const app: Express = express();
@@ -26,6 +27,7 @@ app.get("/", (req: Request, res: Response) => {
 
 app.use("/team", teamRouter);
 app.use("/member", memberRouter);
+app.use("/admin", adminRouter );
 
 const serverConnect = () => {
 	try {

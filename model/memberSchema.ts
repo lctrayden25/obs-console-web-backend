@@ -1,5 +1,5 @@
 import mongoose, { Mongoose } from "mongoose";
-const { Schema } = mongoose;
+const { Schema } = mongoose as Mongoose;
 
 const memberSchema = new Schema(
 	{

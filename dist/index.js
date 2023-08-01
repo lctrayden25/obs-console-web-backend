@@ -10,6 +10,7 @@ const body_parser_1 = __importDefault(require("body-parser"));
 const Database_1 = __importDefault(require("./config/Database"));
 const teamRouter_1 = require("./router/teamRouter");
 const memberRouter_1 = require("./router/memberRouter");
+const adminRouter_1 = require("./router/adminRouter");
 dotenv_1.default.config();
 const app = (0, express_1.default)();
 const corsOptions = {
@@ -25,6 +26,7 @@ app.get("/", (req, res) => {
 });
 app.use("/team", teamRouter_1.teamRouter);
 app.use("/member", memberRouter_1.memberRouter);
+app.use("/admin", adminRouter_1.adminRouter);
 const serverConnect = () => {
     try {
         app.listen(9000, () => {
