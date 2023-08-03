@@ -19,7 +19,7 @@ const adminSchema = new Schema({
     role: {
         type: String,
         require: true,
-        default: "Admin",
+        default: "admin",
     },
 }, {
     timestamps: true,

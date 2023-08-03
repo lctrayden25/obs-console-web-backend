@@ -8,9 +8,11 @@ const dotenv_1 = __importDefault(require("dotenv"));
 const cors_1 = __importDefault(require("cors"));
 const body_parser_1 = __importDefault(require("body-parser"));
 const Database_1 = __importDefault(require("./config/Database"));
+const cookie_parser_1 = __importDefault(require("cookie-parser"));
 const teamRouter_1 = require("./router/teamRouter");
 const memberRouter_1 = require("./router/memberRouter");
 const adminRouter_1 = require("./router/adminRouter");
+const authRouter_1 = require("./router/authRouter");
 dotenv_1.default.config();
 const app = (0, express_1.default)();
 const corsOptions = {
@@ -21,12 +23,14 @@ const corsOptions = {
 app.use((0, cors_1.default)(corsOptions));
 app.use(body_parser_1.default.json());
 app.use(body_parser_1.default.urlencoded({ extended: false }));
+app.use((0, cookie_parser_1.default)());
 app.get("/", (req, res) => {
     return res.json("Homepage");
 });
 app.use("/team", teamRouter_1.teamRouter);
 app.use("/member", memberRouter_1.memberRouter);
 app.use("/admin", adminRouter_1.adminRouter);
+app.use("/auth", authRouter_1.authRouter);
 const serverConnect = () => {
     try {
         app.listen(9000, () => {

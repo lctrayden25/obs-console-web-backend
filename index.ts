@@ -3,10 +3,12 @@ import dotenv from "dotenv";
 import cors from "cors";
 import bodyParser from "body-parser";
 import database from "./config/Database";
+import cookieParser from "cookie-parser";
 
 import { teamRouter } from "./router/teamRouter";
 import { memberRouter } from "./router/memberRouter";
-import { adminRouter } from "./router/adminRouter"
+import { adminRouter } from "./router/adminRouter";
+import { authRouter } from "./router/authRouter";
 
 dotenv.config();
 const app: Express = express();
@@ -20,6 +22,7 @@ const corsOptions = {
 app.use(cors(corsOptions));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
+app.use(cookieParser())
 
 app.get("/", (req: Request, res: Response) => {
 	return res.json("Homepage");
@@ -27,7 +30,8 @@ app.get("/", (req: Request, res: Response) => {
 
 app.use("/team", teamRouter);
 app.use("/member", memberRouter);
-app.use("/admin", adminRouter );
+app.use("/admin", adminRouter);
+app.use("/auth", authRouter);
 
 const serverConnect = () => {
 	try {
