@@ -9,7 +9,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.updateTeam = exports.getTeam = exports.createTeam = exports.getTeamCount = exports.getTeamList = void 0;
+exports.deleteTeam = exports.updateTeam = exports.getTeam = exports.createTeam = exports.getTeamCount = exports.getTeamList = void 0;
 const teamSchema_1 = require("../model/teamSchema");
 const getTeamList = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     const { page, limit, member, team } = req === null || req === void 0 ? void 0 : req.query;
@@ -82,3 +82,13 @@ const updateTeam = (req, res, next) => __awaiter(void 0, void 0, void 0, functio
         .json({ message: "Update the team data successfully." });
 });
 exports.updateTeam = updateTeam;
+const deleteTeam = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
+    const { id } = req.params;
+    if (!id)
+        return res.status(409).json({ error: `Team ID - ${id} Not Found` });
+    const deleteTeam = yield teamSchema_1.Team.findByIdAndDelete({ _id: id });
+    if (!deleteTeam)
+        return res.status(500).json({ error: "Internal Server Error." });
+    return res.status(200).json({ message: "Delete team successfully." });
+});
+exports.deleteTeam = deleteTeam;

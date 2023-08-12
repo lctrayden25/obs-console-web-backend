@@ -9,7 +9,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.updateMember = exports.getMemberCount = exports.getMemberList = exports.getMember = exports.createMember = void 0;
+exports.deleteMember = exports.updateMember = exports.getMemberCount = exports.getMemberList = exports.getMember = exports.createMember = void 0;
 const memberSchema_1 = require("../model/memberSchema");
 var Gender;
 (function (Gender) {
@@ -67,3 +67,13 @@ const updateMember = (req, res, next) => __awaiter(void 0, void 0, void 0, funct
     return res.status(200).json({ message: "Update member successfully." });
 });
 exports.updateMember = updateMember;
+const deleteMember = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
+    const { id } = req === null || req === void 0 ? void 0 : req.params;
+    if (!id)
+        return res.status(404).json({ error: `Member ID - ${id} Not Found.` });
+    const deleteMember = yield memberSchema_1.Member.findByIdAndDelete({ _id: id });
+    if (!deleteMember)
+        return res.status(500).json({ error: "Internal Server Error." });
+    return res.status(200).json({ message: "Delete member successfully." });
+});
+exports.deleteMember = deleteMember;

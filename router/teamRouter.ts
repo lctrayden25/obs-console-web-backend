@@ -7,6 +7,7 @@ import {
 	createTeam,
 	getTeam,
 	updateTeam,
+	deleteTeam,
 } from "../controller/teamController";
 
 router.get("/get-team-list", getTeamList);
@@ -18,5 +19,7 @@ router.post("/create-team", createTeam);
 router.get("/get-team/:id", getTeam);
 
 router.put("/update-team/:id", updateTeam);
+
+router.delete("/delete-team/:id", deleteTeam);
 
 export { router as teamRouter };

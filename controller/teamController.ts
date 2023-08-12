@@ -113,3 +113,20 @@ export const updateTeam = async (
 		.status(200)
 		.json({ message: "Update the team data successfully." });
 };
+
+export const deleteTeam = async (
+	req: Request,
+	res: Response,
+	next: NextFunction
+) => {
+	const { id } = req.params;
+
+	if (!id) return res.status(409).json({ error: `Team ID - ${id} Not Found` });
+
+	const deleteTeam = await Team.findByIdAndDelete({ _id: id });
+
+	if (!deleteTeam)
+		return res.status(500).json({ error: "Internal Server Error." });
+
+	return res.status(200).json({ message: "Delete team successfully." });
+};

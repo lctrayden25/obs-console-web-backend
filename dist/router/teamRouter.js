@@ -13,3 +13,4 @@ router.get("/get-team-count", teamController_1.getTeamCount);
 router.post("/create-team", teamController_1.createTeam);
 router.get("/get-team/:id", teamController_1.getTeam);
 router.put("/update-team/:id", teamController_1.updateTeam);
+router.delete("/delete-team/:id", teamController_1.deleteTeam);

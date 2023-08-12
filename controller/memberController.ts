@@ -95,3 +95,20 @@ export const updateMember = async (
 
 	return res.status(200).json({ message: "Update member successfully." });
 };
+
+export const deleteMember = async (
+	req: Request,
+	res: Response,
+	next: NextFunction
+) => {
+	const { id } = req?.params;
+
+	if (!id)
+		return res.status(404).json({ error: `Member ID - ${id} Not Found.` });
+
+	const deleteMember = await Member.findByIdAndDelete({ _id: id });
+	if (!deleteMember)
+		return res.status(500).json({ error: "Internal Server Error." });
+
+	return res.status(200).json({ message: "Delete member successfully." });
+};
