@@ -9,3 +9,6 @@ const router = express_1.default.Router();
 exports.authRouter = router;
 const authController_1 = require("../controller/authController");
 router.post("/login", authController_1.login);
+router.post("/logout", authController_1.logout);
+router.post("/me", authController_1.authAdmin);
+router.post("/update-password", authController_1.updateAdminPassword);

@@ -30,6 +30,7 @@
     "jsonwebtoken": "^9.0.1",
     "mongoose": "^7.3.0",
     "nodemon": "^2.0.22",
+    "rand-token": "^1.0.1",
     "typescript": "^5.1.3"
   }
 }

@@ -16,13 +16,14 @@ const app: Express = express();
 const corsOptions = {
 	origin: ["http://localhost:3000", "http://localhost:3001"],
 	methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
-	allowedHeaders: ["Content-Type", "Authorization"],
+	allowedHeaders: ["Content-Type", "Authorization", ],
+	credentials: true,
 };
 
 app.use(cors(corsOptions));
+app.use(cookieParser());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
-app.use(cookieParser())
 
 app.get("/", (req: Request, res: Response) => {
 	return res.json("Homepage");
