@@ -78,7 +78,6 @@ export const getTeam = async (
 	next: NextFunction
 ) => {
 	const teamId = await req.params?.id;
-	console.log(teamId);
 
 	if (!teamId)
 		return res.status(502).json({ error: "TeamId No Found Or Missing." }).end();
@@ -88,7 +87,7 @@ export const getTeam = async (
 	if (!getTeam)
 		return res
 			.status(404)
-			.json({ error: `Team With ID ${teamId} Found` })
+			.json({ error: `Team With ID ${teamId} Not Found` })
 			.end();
 
 	return res.status(200).json(getTeam).end();

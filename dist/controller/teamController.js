@@ -58,14 +58,13 @@ exports.createTeam = createTeam;
 const getTeam = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     var _a;
     const teamId = yield ((_a = req.params) === null || _a === void 0 ? void 0 : _a.id);
-    console.log(teamId);
     if (!teamId)
         return res.status(502).json({ error: "TeamId No Found Or Missing." }).end();
     const getTeam = yield teamSchema_1.Team.findById(teamId);
     if (!getTeam)
         return res
             .status(404)
-            .json({ error: `Team With ID ${teamId} Found` })
+            .json({ error: `Team With ID ${teamId} Not Found` })
             .end();
     return res.status(200).json(getTeam).end();
 });
