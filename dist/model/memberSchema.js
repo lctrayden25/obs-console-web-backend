@@ -21,6 +21,7 @@ const memberSchema = new Schema({
     phone: {
         type: String,
         require: true,
+        unique: true,
     },
     gender: {
         type: String,
@@ -29,12 +30,12 @@ const memberSchema = new Schema({
     email: {
         type: String,
     },
-    dateOfYear: {
-        type: Number,
+    yearOfBirth: {
+        type: String,
         require: true,
     },
-    dateOfMonth: {
-        type: Number,
+    monthOfBirth: {
+        type: String,
     },
     position: {
         type: [String],
@@ -43,7 +44,7 @@ const memberSchema = new Schema({
         type: String,
         default: "Rayden Li",
     },
-    team: [{ type: Schema.Types.ObjectId, ref: "Team" }],
+    // team: [{ type: Schema.Types.ObjectId, ref: "Team" }],
 }, {
     timestamps: true,
 });

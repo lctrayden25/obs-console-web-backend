@@ -1,12 +1,12 @@
 import express, { Express, Request, Response, NextFunction } from "express";
 import { Team } from "../model/teamSchema";
 
-interface ListTableQuery {
+type ListTableQuery = {
 	page: number;
 	limit: number;
 	member: string;
 	team: string;
-}
+};
 
 export const getTeamList = async (
 	req: Request<{}, {}, {}, ListTableQuery>,

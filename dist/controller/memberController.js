@@ -9,27 +9,46 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.getMemberCount = exports.getMemberList = exports.createMember = void 0;
+exports.updateMember = exports.getMemberCount = exports.getMemberList = exports.getMember = exports.createMember = void 0;
 const memberSchema_1 = require("../model/memberSchema");
+var Gender;
+(function (Gender) {
+    Gender["Male"] = "male";
+    Gender["Female"] = "female";
+})(Gender || (Gender = {}));
+var PlayPosition;
+(function (PlayPosition) {
+    PlayPosition["PointGuard"] = "pointGuard";
+    PlayPosition["ShootingGuard"] = "shootingGuard";
+    PlayPosition["SmallForward"] = "smallForward";
+    PlayPosition["PowerForward"] = "powerForward";
+    PlayPosition["Center"] = "center";
+})(PlayPosition || (PlayPosition = {}));
 const createMember = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
-    const data = {
-        firstName: "Rayden",
-        lastName: "Li",
-        phone: "55654453",
-        gender: "Male",
-        email: "rayden@gmail.com",
-        dateOfYear: 1997,
-        dateOfMonth: 9,
-        position: ["guard"],
-        updatedBy: "rayden",
-    };
-    const create = yield memberSchema_1.Member.create(data);
-    return res.status(200).json("create").end();
+    const memberData = req === null || req === void 0 ? void 0 : req.body;
+    const { phone } = memberData !== null && memberData !== void 0 ? memberData : {};
+    const isExistedMember = yield memberSchema_1.Member.findOne({ phone });
+    if (isExistedMember)
+        return res
+            .status(409)
+            .json({ error: "Member existed in database already." });
+    const createMember = yield memberSchema_1.Member.create(memberData);
+    if (!createMember)
+        return res.status(400).json({ error: "Bad user input." });
+    return res.status(200).json({ message: "Member created successfully." });
 });
 exports.createMember = createMember;
+const getMember = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
+    const { id } = req === null || req === void 0 ? void 0 : req.params;
+    if (!id)
+        return res.status(404).json({ error: `Member ID - ${id} Not Found.` });
+    const getMember = yield memberSchema_1.Member.findById(id);
+    return res.status(200).json(getMember);
+});
+exports.getMember = getMember;
 const getMemberList = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     const memberList = yield memberSchema_1.Member.find();
-    return res.status(200).json(memberList).end();
+    return res.status(200).json(memberList);
 });
 exports.getMemberList = getMemberList;
 const getMemberCount = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
@@ -37,3 +56,14 @@ const getMemberCount = (req, res, next) => __awaiter(void 0, void 0, void 0, fun
     return res.status(200).json(memberList === null || memberList === void 0 ? void 0 : memberList.length).end();
 });
 exports.getMemberCount = getMemberCount;
+const updateMember = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
+    const { id } = req === null || req === void 0 ? void 0 : req.params;
+    const memberData = req === null || req === void 0 ? void 0 : req.body;
+    if (!id)
+        return res.status(404).json({ error: `Member ID - ${id} Not Found.` });
+    const updateMember = yield memberSchema_1.Member.findByIdAndUpdate(id, memberData);
+    if (!updateMember)
+        return res.status(403).json({ error: "Bad user input" });
+    return res.status(200).json({ message: "Update member successfully." });
+});
+exports.updateMember = updateMember;
