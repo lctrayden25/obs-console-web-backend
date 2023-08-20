@@ -47,7 +47,7 @@ const getMember = (req, res, next) => __awaiter(void 0, void 0, void 0, function
 });
 exports.getMember = getMember;
 const getMemberList = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
-    const { page, limit, team, member } = req === null || req === void 0 ? void 0 : req.query;
+    const { page, limit, member } = req === null || req === void 0 ? void 0 : req.query;
     const memberList = yield memberSchema_1.Member.find({
         lastName: { $regex: member, $options: "i" },
     });

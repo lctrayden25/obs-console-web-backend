@@ -4,7 +4,6 @@ import { Team } from "../model/teamSchema";
 type ListTableQuery = {
 	page: number;
 	limit: number;
-	member: string;
 	team: string;
 };
 
@@ -13,7 +12,7 @@ export const getTeamList = async (
 	res: Response,
 	next: NextFunction
 ) => {
-	const { page, limit, member, team } = req?.query;
+	const { page, limit, team } = req?.query;
 
 	const getTeamList = await Team.find({
 		name: { $regex: team, $options: "i" },
@@ -61,14 +60,17 @@ export const getTeam = async (
 	const teamId = req.params?.id;
 
 	if (!teamId)
-		return res.status(502).json({ error: "TeamId No Found Or Missing." }).end();
+		return res
+			.status(502)
+			.json({ error: "Team ID No Found Or Missing." })
+			.end();
 
 	const getTeam = await Team.findById(teamId);
 
 	if (!getTeam)
 		return res
 			.status(404)
-			.json({ error: `Team With ID ${teamId} Not Found` })
+			.json({ error: `Team ID - ${teamId} Not Found` })
 			.end();
 
 	return res.status(200).json(getTeam).end();
@@ -83,7 +85,10 @@ export const updateTeam = async (
 	const { name, memberCount } = req.body;
 
 	if (!id)
-		return res.status(404).json({ error: "TeamId No Found Or Missing." }).end();
+		return res
+			.status(404)
+			.json({ error: "Team ID No Found Or Missing." })
+			.end();
 
 	const updateTeam = await Team.findByIdAndUpdate(id, { name, memberCount });
 

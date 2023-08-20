@@ -12,7 +12,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.deleteTeam = exports.updateTeam = exports.getTeam = exports.createTeam = exports.getTeamList = void 0;
 const teamSchema_1 = require("../model/teamSchema");
 const getTeamList = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
-    const { page, limit, member, team } = req === null || req === void 0 ? void 0 : req.query;
+    const { page, limit, team } = req === null || req === void 0 ? void 0 : req.query;
     const getTeamList = yield teamSchema_1.Team.find({
         name: { $regex: team, $options: "i" },
     });
@@ -45,12 +45,15 @@ const getTeam = (req, res, next) => __awaiter(void 0, void 0, void 0, function* 
     var _a;
     const teamId = (_a = req.params) === null || _a === void 0 ? void 0 : _a.id;
     if (!teamId)
-        return res.status(502).json({ error: "TeamId No Found Or Missing." }).end();
+        return res
+            .status(502)
+            .json({ error: "Team ID No Found Or Missing." })
+            .end();
     const getTeam = yield teamSchema_1.Team.findById(teamId);
     if (!getTeam)
         return res
             .status(404)
-            .json({ error: `Team With ID ${teamId} Not Found` })
+            .json({ error: `Team ID - ${teamId} Not Found` })
             .end();
     return res.status(200).json(getTeam).end();
 });
@@ -59,7 +62,10 @@ const updateTeam = (req, res, next) => __awaiter(void 0, void 0, void 0, functio
     const { id } = req.params;
     const { name, memberCount } = req.body;
     if (!id)
-        return res.status(404).json({ error: "TeamId No Found Or Missing." }).end();
+        return res
+            .status(404)
+            .json({ error: "Team ID No Found Or Missing." })
+            .end();
     const updateTeam = yield teamSchema_1.Team.findByIdAndUpdate(id, { name, memberCount });
     if (!updateTeam)
         return res.status(500).json({ error: "Internal Server Error" });
