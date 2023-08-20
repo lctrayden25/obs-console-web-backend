@@ -9,33 +9,19 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.deleteTeam = exports.updateTeam = exports.getTeam = exports.createTeam = exports.getTeamCount = exports.getTeamList = void 0;
+exports.deleteTeam = exports.updateTeam = exports.getTeam = exports.createTeam = exports.getTeamList = void 0;
 const teamSchema_1 = require("../model/teamSchema");
 const getTeamList = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     const { page, limit, member, team } = req === null || req === void 0 ? void 0 : req.query;
-    const getTeamList = yield teamSchema_1.Team.find();
-    if (page && limit) {
-        const startIndex = (page - 1) * limit;
-        const endIndex = page * limit;
-        const result = getTeamList.slice(startIndex, endIndex);
-        if (!result) {
-            return res.status(502).json({ message: "Internal Server Error" }).end();
-        }
-        return res.status(200).json(result).end();
-    }
-    else {
-        return res.status(200).json(getTeamList).end();
-    }
+    const getTeamList = yield teamSchema_1.Team.find({
+        name: { $regex: team, $options: "i" },
+    });
+    return res
+        .status(200)
+        .json({ list: getTeamList, count: getTeamList === null || getTeamList === void 0 ? void 0 : getTeamList.length })
+        .end();
 });
 exports.getTeamList = getTeamList;
-const getTeamCount = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
-    const result = yield teamSchema_1.Team.find();
-    if (!result) {
-        return res.status(404).json({ message: "No List Found." }).end();
-    }
-    return res.status(200).json(result === null || result === void 0 ? void 0 : result.length).end();
-});
-exports.getTeamCount = getTeamCount;
 const createTeam = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     const { name, memberCount, joinAt } = yield req.body;
     if (!name || !memberCount)
@@ -57,7 +43,7 @@ const createTeam = (req, res, next) => __awaiter(void 0, void 0, void 0, functio
 exports.createTeam = createTeam;
 const getTeam = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     var _a;
-    const teamId = yield ((_a = req.params) === null || _a === void 0 ? void 0 : _a.id);
+    const teamId = (_a = req.params) === null || _a === void 0 ? void 0 : _a.id;
     if (!teamId)
         return res.status(502).json({ error: "TeamId No Found Or Missing." }).end();
     const getTeam = yield teamSchema_1.Team.findById(teamId);

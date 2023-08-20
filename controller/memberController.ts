@@ -64,20 +64,23 @@ export const getMemberList = async (
 	res: Response,
 	next: NextFunction
 ) => {
-	const memberList = await Member.find();
+	const { page, limit, team, member } = req?.query;
+	const memberList = await Member.find({
+		lastName: { $regex: member, $options: "i" },
+	});
 
-	return res.status(200).json(memberList);
+	return res.status(200).json({ list: memberList, count: memberList?.length });
 };
 
-export const getMemberCount = async (
-	req: Request,
-	res: Response,
-	next: NextFunction
-) => {
-	const memberList = await Member.find();
+// export const getMemberCount = async (
+// 	req: Request,
+// 	res: Response,
+// 	next: NextFunction
+// ) => {
+// 	const memberList = await Member.find();
 
-	return res.status(200).json(memberList?.length).end();
-};
+// 	return res.status(200).json(memberList?.length).end();
+// };
 
 export const updateMember = async (
 	req: Request,

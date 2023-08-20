@@ -54,7 +54,6 @@ const logout = (req, res, next) => __awaiter(void 0, void 0, void 0, function* (
 exports.logout = logout;
 const authAdmin = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     const { token } = req.cookies;
-    console.log(token);
     if (!token) {
         return res
             .status(502)
@@ -62,7 +61,7 @@ const authAdmin = (req, res, next) => __awaiter(void 0, void 0, void 0, function
             .end();
     }
     const auth = jsonwebtoken_1.default.verify(token, process.env.PRIVATE_KEY);
-    return res.status(200).json({ token: token }).end();
+    return res.status(200).json({ auth }).end();
 });
 exports.authAdmin = authAdmin;
 const updateAdminPassword = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {

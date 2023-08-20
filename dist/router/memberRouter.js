@@ -12,5 +12,5 @@ router.post("/create-member", memberController_1.createMember);
 router.get("/get-member/:id", memberController_1.getMember);
 router.post("/update-member/:id", memberController_1.updateMember);
 router.get("/get-member-list", memberController_1.getMemberList);
-router.get("/get-member-count", memberController_1.getMemberCount);
+// router.get("/get-member-count", getMemberCount);
 router.delete("/delete-member/:id", memberController_1.deleteMember);

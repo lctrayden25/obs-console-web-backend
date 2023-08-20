@@ -6,7 +6,7 @@ import {
 	getMemberList,
 	getMember,
 	updateMember,
-	getMemberCount,
+	// getMemberCount,
 	deleteMember,
 } from "../controller/memberController";
 
@@ -18,7 +18,7 @@ router.post("/update-member/:id", updateMember);
 
 router.get("/get-member-list", getMemberList);
 
-router.get("/get-member-count", getMemberCount);
+// router.get("/get-member-count", getMemberCount);
 
 router.delete("/delete-member/:id", deleteMember);
 

@@ -74,7 +74,6 @@ export const authAdmin = async (
 	next: NextFunction
 ) => {
 	const { token } = req.cookies;
-	console.log(token);
 
 	if (!token) {
 		return res
@@ -85,7 +84,7 @@ export const authAdmin = async (
 
 	const auth = jwt.verify(token, process.env.PRIVATE_KEY as string);
 
-	return res.status(200).json({ token: token }).end();
+	return res.status(200).json({ auth }).end();
 };
 
 export const updateAdminPassword = async (

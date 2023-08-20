@@ -9,7 +9,7 @@ const router = express_1.default.Router();
 exports.teamRouter = router;
 const teamController_1 = require("../controller/teamController");
 router.get("/get-team-list", teamController_1.getTeamList);
-router.get("/get-team-count", teamController_1.getTeamCount);
+// router.get("/get-team-count", getTeamCount);
 router.post("/create-team", teamController_1.createTeam);
 router.get("/get-team/:id", teamController_1.getTeam);
 router.put("/update-team/:id", teamController_1.updateTeam);

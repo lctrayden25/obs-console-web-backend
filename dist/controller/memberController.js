@@ -9,7 +9,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.deleteMember = exports.updateMember = exports.getMemberCount = exports.getMemberList = exports.getMember = exports.createMember = void 0;
+exports.deleteMember = exports.updateMember = exports.getMemberList = exports.getMember = exports.createMember = void 0;
 const memberSchema_1 = require("../model/memberSchema");
 var Gender;
 (function (Gender) {
@@ -47,15 +47,21 @@ const getMember = (req, res, next) => __awaiter(void 0, void 0, void 0, function
 });
 exports.getMember = getMember;
 const getMemberList = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
-    const memberList = yield memberSchema_1.Member.find();
-    return res.status(200).json(memberList);
+    const { page, limit, team, member } = req === null || req === void 0 ? void 0 : req.query;
+    const memberList = yield memberSchema_1.Member.find({
+        lastName: { $regex: member, $options: "i" },
+    });
+    return res.status(200).json({ list: memberList, count: memberList === null || memberList === void 0 ? void 0 : memberList.length });
 });
 exports.getMemberList = getMemberList;
-const getMemberCount = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
-    const memberList = yield memberSchema_1.Member.find();
-    return res.status(200).json(memberList === null || memberList === void 0 ? void 0 : memberList.length).end();
-});
-exports.getMemberCount = getMemberCount;
+// export const getMemberCount = async (
+// 	req: Request,
+// 	res: Response,
+// 	next: NextFunction
+// ) => {
+// 	const memberList = await Member.find();
+// 	return res.status(200).json(memberList?.length).end();
+// };
 const updateMember = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     const { id } = req === null || req === void 0 ? void 0 : req.params;
     const memberData = req === null || req === void 0 ? void 0 : req.body;

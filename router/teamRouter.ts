@@ -3,7 +3,7 @@ const router = express.Router();
 
 import {
 	getTeamList,
-	getTeamCount,
+	// getTeamCount,
 	createTeam,
 	getTeam,
 	updateTeam,
@@ -12,7 +12,7 @@ import {
 
 router.get("/get-team-list", getTeamList);
 
-router.get("/get-team-count", getTeamCount);
+// router.get("/get-team-count", getTeamCount);
 
 router.post("/create-team", createTeam);
 

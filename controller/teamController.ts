@@ -15,33 +15,14 @@ export const getTeamList = async (
 ) => {
 	const { page, limit, member, team } = req?.query;
 
-	const getTeamList = await Team.find();
+	const getTeamList = await Team.find({
+		name: { $regex: team, $options: "i" },
+	});
 
-	if (page && limit) {
-		const startIndex = (page - 1) * limit;
-		const endIndex = page * limit;
-		const result = getTeamList.slice(startIndex, endIndex);
-
-		if (!result) {
-			return res.status(502).json({ message: "Internal Server Error" }).end();
-		}
-		return res.status(200).json(result).end();
-	} else {
-		return res.status(200).json(getTeamList).end();
-	}
-};
-
-export const getTeamCount = async (
-	req: Request<{}, {}, {}, ListTableQuery>,
-	res: Response,
-	next: NextFunction
-) => {
-	const result = await Team.find();
-
-	if (!result) {
-		return res.status(404).json({ message: "No List Found." }).end();
-	}
-	return res.status(200).json(result?.length).end();
+	return res
+		.status(200)
+		.json({ list: getTeamList, count: getTeamList?.length })
+		.end();
 };
 
 export const createTeam = async (
@@ -77,7 +58,7 @@ export const getTeam = async (
 	res: Response,
 	next: NextFunction
 ) => {
-	const teamId = await req.params?.id;
+	const teamId = req.params?.id;
 
 	if (!teamId)
 		return res.status(502).json({ error: "TeamId No Found Or Missing." }).end();
