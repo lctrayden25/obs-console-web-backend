@@ -21,6 +21,7 @@ const createDefaultAdmin = (req, res, next) => __awaiter(void 0, void 0, void 0,
     const role = "admin";
     const hashPassword = yield bcrypt_1.default.hash(password, 10);
     const adminData = {
+        name: email,
         email,
         password: hashPassword,
         role,

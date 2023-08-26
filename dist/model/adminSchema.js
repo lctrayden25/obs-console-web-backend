@@ -11,6 +11,10 @@ var UserRole;
     UserRole["Admin"] = "admin";
 })(UserRole || (UserRole = {}));
 const adminSchema = new Schema({
+    name: {
+        type: String,
+        required: true
+    },
     email: {
         type: String,
         require: true,

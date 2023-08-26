@@ -1,4 +1,4 @@
-import express, { Express, Request, Response, NextFunction } from "express";
+import express, { Express, Request, Response, NextFunction, ErrorRequestHandler } from "express";
 import { Team } from "../model/teamSchema";
 
 type ListTableQuery = {
@@ -13,7 +13,6 @@ export const getTeamList = async (
 	next: NextFunction
 ) => {
 	const { page, limit, team } = req?.query;
-
 	const getTeamList = await Team.find({
 		name: { $regex: team ?? "", $options: "i" },
 	});

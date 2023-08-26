@@ -9,11 +9,15 @@ interface AdminSchema {
 	email: string;
 	password: string;
 	role: UserRole;
-	createdAt: Date;
+	name: string
 }
 
 const adminSchema = new Schema<AdminSchema>(
 	{
+		name: {
+			type: String,
+			required: true
+		},
 		email: {
 			type: String,
 			require: true,

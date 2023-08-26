@@ -13,6 +13,7 @@ export const createDefaultAdmin = async (
 
 	const hashPassword = await bcrypt.hash(password, 10);
 	const adminData = {
+		name: email,
 		email,
 		password: hashPassword,
 		role,
