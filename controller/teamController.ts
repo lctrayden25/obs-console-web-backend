@@ -1,4 +1,9 @@
-import express, { Express, Request, Response, NextFunction, ErrorRequestHandler } from "express";
+import express, {
+	Express,
+	Request,
+	Response,
+	NextFunction,
+} from "express";
 import { Team } from "../model/teamSchema";
 
 type ListTableQuery = {

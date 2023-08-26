@@ -61,8 +61,7 @@ const memberSchema = new Schema<MemberSchema>(
 			require: true,
 		},
 		updatedBy: {
-			type: Types.ObjectId,
-			ref: "Admin",
+			type: String,
 		},
 	},
 	{

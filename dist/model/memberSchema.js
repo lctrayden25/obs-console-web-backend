@@ -71,8 +71,7 @@ const memberSchema = new Schema({
         require: true,
     },
     updatedBy: {
-        type: mongoose_1.Types.ObjectId,
-        ref: "Admin",
+        type: String,
     },
 }, {
     timestamps: true,

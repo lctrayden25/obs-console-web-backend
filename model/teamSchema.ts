@@ -21,8 +21,7 @@ const teamSchema = new Schema<TeamSchema>(
 			type: Date,
 		},
 		updatedBy: {
-			type: Types.ObjectId,
-			ref: "Admin",
+			type: String,
 			require: true,
 		},
 	},
