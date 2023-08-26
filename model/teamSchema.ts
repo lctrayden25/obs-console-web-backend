@@ -6,7 +6,7 @@ interface TeamSchema {
 	memberCount: number;
 	joinAt: Date;
 	updatedBy: string;
-	createdAt: Date
+	createdAt: Date;
 }
 
 const teamSchema = new Schema<TeamSchema>(

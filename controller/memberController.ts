@@ -1,4 +1,5 @@
 import express, { Express, Request, Response, NextFunction } from "express";
+import { Types } from "mongoose";
 import { Member } from "../model/memberSchema";
 
 enum Gender {
@@ -23,6 +24,7 @@ type MemberType = {
 	dateOfYear: number;
 	dateOfMonth: number;
 	position: [PlayerPosition];
+	team: Types.ObjectId;
 	updatedBy: string;
 };
 
@@ -55,7 +57,7 @@ export const getMember = async (
 	if (!id)
 		return res.status(404).json({ error: `Member ID - ${id} Not Found.` });
 
-	const getMember = await Member.findById(id);
+	const getMember = await Member.findById(id).populate("team");
 
 	return res.status(200).json(getMember);
 };
@@ -68,7 +70,7 @@ export const getMemberList = async (
 	const { page, limit, member } = req?.query;
 	const memberList = await Member.find({
 		lastName: { $regex: member ?? "", $options: "i" },
-	});
+	}).populate("team");
 
 	return res.status(200).json({ list: memberList, count: memberList?.length });
 };

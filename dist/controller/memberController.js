@@ -42,7 +42,7 @@ const getMember = (req, res, next) => __awaiter(void 0, void 0, void 0, function
     const { id } = req === null || req === void 0 ? void 0 : req.params;
     if (!id)
         return res.status(404).json({ error: `Member ID - ${id} Not Found.` });
-    const getMember = yield memberSchema_1.Member.findById(id);
+    const getMember = yield memberSchema_1.Member.findById(id).populate("team");
     return res.status(200).json(getMember);
 });
 exports.getMember = getMember;
@@ -50,7 +50,7 @@ const getMemberList = (req, res, next) => __awaiter(void 0, void 0, void 0, func
     const { page, limit, member } = req === null || req === void 0 ? void 0 : req.query;
     const memberList = yield memberSchema_1.Member.find({
         lastName: { $regex: member !== null && member !== void 0 ? member : "", $options: "i" },
-    });
+    }).populate("team");
     return res.status(200).json({ list: memberList, count: memberList === null || memberList === void 0 ? void 0 : memberList.length });
 });
 exports.getMemberList = getMemberList;

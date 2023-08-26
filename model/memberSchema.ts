@@ -42,7 +42,8 @@ const memberSchema = new Schema(
 			require: true,
 		},
 		updatedBy: {
-			type: String,
+			type: Types.ObjectId,
+			ref: "Admin",
 			default: "Rayden Li",
 		},
 	},

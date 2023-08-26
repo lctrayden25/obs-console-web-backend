@@ -66,7 +66,8 @@ const memberSchema = new Schema({
         require: true,
     },
     updatedBy: {
-        type: String,
+        type: mongoose_1.Types.ObjectId,
+        ref: "Admin",
         default: "Rayden Li",
     },
 }, {
