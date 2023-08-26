@@ -20,6 +20,7 @@ const adminSchema = new Schema(
 	},
 	{
 		timestamps: true,
+		versionKey: false
 	}
 );
 

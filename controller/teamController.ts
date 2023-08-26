@@ -15,7 +15,7 @@ export const getTeamList = async (
 	const { page, limit, team } = req?.query;
 
 	const getTeamList = await Team.find({
-		name: { $regex: team, $options: "i" },
+		name: { $regex: team ?? "", $options: "i" },
 	});
 
 	return res

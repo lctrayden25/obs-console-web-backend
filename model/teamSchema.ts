@@ -11,7 +11,7 @@ const teamSchema = new Schema(
 			type: Number,
 		},
 		joinAt: {
-			type: Date
+			type: Date,
 		},
 		updatedBy: {
 			type: String,
@@ -19,6 +19,7 @@ const teamSchema = new Schema(
 	},
 	{
 		timestamps: true,
+		versionKey: false,
 	}
 );
 

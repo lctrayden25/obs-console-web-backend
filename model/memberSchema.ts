@@ -44,6 +44,7 @@ const memberSchema = new Schema(
 	},
 	{
 		timestamps: true,
+		versionKey: false
 	}
 );
 

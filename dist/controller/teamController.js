@@ -14,7 +14,7 @@ const teamSchema_1 = require("../model/teamSchema");
 const getTeamList = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     const { page, limit, team } = req === null || req === void 0 ? void 0 : req.query;
     const getTeamList = yield teamSchema_1.Team.find({
-        name: { $regex: team, $options: "i" },
+        name: { $regex: team !== null && team !== void 0 ? team : "", $options: "i" },
     });
     return res
         .status(200)

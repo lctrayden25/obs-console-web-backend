@@ -47,5 +47,6 @@ const memberSchema = new Schema({
     // team: [{ type: Schema.Types.ObjectId, ref: "Team" }],
 }, {
     timestamps: true,
+    versionKey: false
 });
 exports.Member = mongoose_1.default.model("Member", memberSchema);

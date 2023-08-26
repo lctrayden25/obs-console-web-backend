@@ -66,7 +66,7 @@ export const getMemberList = async (
 ) => {
 	const { page, limit, member } = req?.query;
 	const memberList = await Member.find({
-		lastName: { $regex: member, $options: "i" },
+		lastName: { $regex: member ?? "", $options: "i" },
 	});
 
 	return res.status(200).json({ list: memberList, count: memberList?.length });

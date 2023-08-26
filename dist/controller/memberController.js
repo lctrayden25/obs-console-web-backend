@@ -49,7 +49,7 @@ exports.getMember = getMember;
 const getMemberList = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     const { page, limit, member } = req === null || req === void 0 ? void 0 : req.query;
     const memberList = yield memberSchema_1.Member.find({
-        lastName: { $regex: member, $options: "i" },
+        lastName: { $regex: member !== null && member !== void 0 ? member : "", $options: "i" },
     });
     return res.status(200).json({ list: memberList, count: memberList === null || memberList === void 0 ? void 0 : memberList.length });
 });

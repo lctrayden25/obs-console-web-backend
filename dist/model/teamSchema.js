@@ -15,12 +15,13 @@ const teamSchema = new Schema({
         type: Number,
     },
     joinAt: {
-        type: Date
+        type: Date,
     },
     updatedBy: {
         type: String,
     },
 }, {
     timestamps: true,
+    versionKey: false,
 });
 exports.Team = mongoose_1.default.model("Team", teamSchema);
