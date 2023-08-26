@@ -16,14 +16,14 @@ var Gender;
     Gender["Male"] = "male";
     Gender["Female"] = "female";
 })(Gender || (Gender = {}));
-var PlayPosition;
-(function (PlayPosition) {
-    PlayPosition["PointGuard"] = "pointGuard";
-    PlayPosition["ShootingGuard"] = "shootingGuard";
-    PlayPosition["SmallForward"] = "smallForward";
-    PlayPosition["PowerForward"] = "powerForward";
-    PlayPosition["Center"] = "center";
-})(PlayPosition || (PlayPosition = {}));
+var PlayerPosition;
+(function (PlayerPosition) {
+    PlayerPosition["PointGuard"] = "pointGuard";
+    PlayerPosition["ShootingGuard"] = "shootingGuard";
+    PlayerPosition["SmallForward"] = "smallForward";
+    PlayerPosition["PowerForward"] = "powerForward";
+    PlayerPosition["Center"] = "center";
+})(PlayerPosition || (PlayerPosition = {}));
 const createMember = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     const memberData = req === null || req === void 0 ? void 0 : req.body;
     const { phone } = memberData !== null && memberData !== void 0 ? memberData : {};
@@ -31,11 +31,11 @@ const createMember = (req, res, next) => __awaiter(void 0, void 0, void 0, funct
     if (isExistedMember)
         return res
             .status(409)
-            .json({ error: "Member existed in database already." });
+            .json({ error: "Member Existed In Collection Already." });
     const createMember = yield memberSchema_1.Member.create(memberData);
     if (!createMember)
-        return res.status(400).json({ error: "Bad user input." });
-    return res.status(200).json({ message: "Member created successfully." });
+        return res.status(400).json({ error: "Bad User Input." });
+    return res.status(200).json({ message: "Member Created Successfully." });
 });
 exports.createMember = createMember;
 const getMember = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
@@ -69,7 +69,7 @@ const updateMember = (req, res, next) => __awaiter(void 0, void 0, void 0, funct
         return res.status(404).json({ error: `Member ID - ${id} Not Found.` });
     const updateMember = yield memberSchema_1.Member.findByIdAndUpdate(id, memberData);
     if (!updateMember)
-        return res.status(403).json({ error: "Bad user input" });
+        return res.status(403).json({ error: "Bad User Input" });
     return res.status(200).json({ message: "Update member successfully." });
 });
 exports.updateMember = updateMember;
@@ -80,6 +80,6 @@ const deleteMember = (req, res, next) => __awaiter(void 0, void 0, void 0, funct
     const deleteMember = yield memberSchema_1.Member.findByIdAndDelete({ _id: id });
     if (!deleteMember)
         return res.status(500).json({ error: "Internal Server Error." });
-    return res.status(200).json({ message: "Delete member successfully." });
+    return res.status(200).json({ message: "Delete Member Successfully." });
 });
 exports.deleteMember = deleteMember;

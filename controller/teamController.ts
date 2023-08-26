@@ -44,9 +44,9 @@ export const createTeam = async (
 		updatedBy: null,
 	};
 
-	const create = await Team.create(createData);
+	const createTeam = await Team.create(createData);
 
-	if (!create)
+	if (!createTeam)
 		return res.status(502).json({ message: "Internal Server Error" }).end();
 
 	return res.status(200).json({ message: "Team Created." }).end();
@@ -91,6 +91,7 @@ export const updateTeam = async (
 			.end();
 
 	const updateTeam = await Team.findByIdAndUpdate(id, { name, memberCount });
+	console.log(updateTeam)
 
 	if (!updateTeam)
 		return res.status(500).json({ error: "Internal Server Error" });

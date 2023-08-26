@@ -1,4 +1,4 @@
-import mongoose, { Mongoose } from "mongoose";
+import mongoose, { Mongoose, Types } from "mongoose";
 const { Schema } = mongoose as Mongoose;
 
 const memberSchema = new Schema(
@@ -36,15 +36,19 @@ const memberSchema = new Schema(
 		position: {
 			type: [String],
 		},
+		team: {
+			type: Types.ObjectId,
+			ref: "Team",
+			require: true,
+		},
 		updatedBy: {
 			type: String,
 			default: "Rayden Li",
 		},
-		// team: [{ type: Schema.Types.ObjectId, ref: "Team" }],
 	},
 	{
 		timestamps: true,
-		versionKey: false
+		versionKey: false,
 	}
 );
 

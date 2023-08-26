@@ -26,13 +26,13 @@ const createDefaultAdmin = (req, res, next) => __awaiter(void 0, void 0, void 0,
         role,
     };
     if (!hashPassword) {
-        return res.status(502).json({ message: "Cannot hash password." });
+        return res.status(502).json({ message: "Cannot Hash Password." });
     }
     const createAdmin = yield adminSchema_1.Admin.create(adminData);
     if (!createAdmin) {
-        return res.status(502).json({ message: "Create admin failure." });
+        return res.status(502).json({ message: "Create Admin Failure." });
     }
-    return res.status(200).json({ message: "Admin created." });
+    return res.status(200).json({ message: "Admin Created." });
 });
 exports.createDefaultAdmin = createDefaultAdmin;
 const createAdmin = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () { });

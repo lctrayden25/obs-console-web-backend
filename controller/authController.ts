@@ -92,5 +92,5 @@ export const updateAdminPassword = async (
 	res: Response,
 	next: NextFunction
 ) => {
-	return res.json("update password");
+	return res.json("Update Password");
 };

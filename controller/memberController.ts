@@ -6,7 +6,7 @@ enum Gender {
 	Female = "female",
 }
 
-enum PlayPosition {
+enum PlayerPosition {
 	PointGuard = "pointGuard",
 	ShootingGuard = "shootingGuard",
 	SmallForward = "smallForward",
@@ -22,7 +22,7 @@ type MemberType = {
 	email: string;
 	dateOfYear: number;
 	dateOfMonth: number;
-	position: [PlayPosition];
+	position: [PlayerPosition];
 	updatedBy: string;
 };
 
@@ -38,12 +38,12 @@ export const createMember = async (
 	if (isExistedMember)
 		return res
 			.status(409)
-			.json({ error: "Member existed in database already." });
+			.json({ error: "Member Existed In Collection Already." });
 
 	const createMember = await Member.create(memberData);
-	if (!createMember) return res.status(400).json({ error: "Bad user input." });
+	if (!createMember) return res.status(400).json({ error: "Bad User Input." });
 
-	return res.status(200).json({ message: "Member created successfully." });
+	return res.status(200).json({ message: "Member Created Successfully." });
 };
 
 export const getMember = async (
@@ -56,6 +56,7 @@ export const getMember = async (
 		return res.status(404).json({ error: `Member ID - ${id} Not Found.` });
 
 	const getMember = await Member.findById(id);
+
 	return res.status(200).json(getMember);
 };
 
@@ -94,7 +95,7 @@ export const updateMember = async (
 		return res.status(404).json({ error: `Member ID - ${id} Not Found.` });
 
 	const updateMember = await Member.findByIdAndUpdate(id, memberData);
-	if (!updateMember) return res.status(403).json({ error: "Bad user input" });
+	if (!updateMember) return res.status(403).json({ error: "Bad User Input" });
 
 	return res.status(200).json({ message: "Update member successfully." });
 };
@@ -113,5 +114,5 @@ export const deleteMember = async (
 	if (!deleteMember)
 		return res.status(500).json({ error: "Internal Server Error." });
 
-	return res.status(200).json({ message: "Delete member successfully." });
+	return res.status(200).json({ message: "Delete Member Successfully." });
 };

@@ -19,16 +19,16 @@ export const createDefaultAdmin = async (
 	};
 
 	if (!hashPassword) {
-		return res.status(502).json({ message: "Cannot hash password." });
+		return res.status(502).json({ message: "Cannot Hash Password." });
 	}
 
 	const createAdmin = await Admin.create(adminData);
 
 	if (!createAdmin) {
-		return res.status(502).json({ message: "Create admin failure." });
+		return res.status(502).json({ message: "Create Admin Failure." });
 	}
 
-	return res.status(200).json({ message: "Admin created." });
+	return res.status(200).json({ message: "Admin Created." });
 };
 
 export const createAdmin = async (

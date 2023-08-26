@@ -65,6 +65,6 @@ const authAdmin = (req, res, next) => __awaiter(void 0, void 0, void 0, function
 });
 exports.authAdmin = authAdmin;
 const updateAdminPassword = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
-    return res.json("update password");
+    return res.json("Update Password");
 });
 exports.updateAdminPassword = updateAdminPassword;

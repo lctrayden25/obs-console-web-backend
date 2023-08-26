@@ -35,8 +35,8 @@ const createTeam = (req, res, next) => __awaiter(void 0, void 0, void 0, functio
         joinAt: joinAt !== null && joinAt !== void 0 ? joinAt : Date.now(),
         updatedBy: null,
     };
-    const create = yield teamSchema_1.Team.create(createData);
-    if (!create)
+    const createTeam = yield teamSchema_1.Team.create(createData);
+    if (!createTeam)
         return res.status(502).json({ message: "Internal Server Error" }).end();
     return res.status(200).json({ message: "Team Created." }).end();
 });
@@ -67,6 +67,7 @@ const updateTeam = (req, res, next) => __awaiter(void 0, void 0, void 0, functio
             .json({ error: "Team ID No Found Or Missing." })
             .end();
     const updateTeam = yield teamSchema_1.Team.findByIdAndUpdate(id, { name, memberCount });
+    console.log(updateTeam);
     if (!updateTeam)
         return res.status(500).json({ error: "Internal Server Error" });
     return res
