@@ -6,6 +6,10 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.Admin = void 0;
 const mongoose_1 = __importDefault(require("mongoose"));
 const { Schema } = mongoose_1.default;
+var UserRole;
+(function (UserRole) {
+    UserRole["Admin"] = "admin";
+})(UserRole || (UserRole = {}));
 const adminSchema = new Schema({
     email: {
         type: String,
@@ -19,10 +23,10 @@ const adminSchema = new Schema({
     role: {
         type: String,
         require: true,
-        default: "admin",
+        default: UserRole.Admin,
     },
 }, {
     timestamps: true,
-    versionKey: false
+    versionKey: false,
 });
 exports.Admin = mongoose_1.default.model("Admin", adminSchema);

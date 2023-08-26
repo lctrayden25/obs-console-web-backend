@@ -1,7 +1,18 @@
 import mongoose, { Mongoose } from "mongoose";
 const { Schema } = mongoose as Mongoose;
 
-const adminSchema = new Schema(
+enum UserRole {
+	Admin = "admin",
+}
+
+interface AdminSchema {
+	email: string;
+	password: string;
+	role: UserRole;
+	createdAt: Date;
+}
+
+const adminSchema = new Schema<AdminSchema>(
 	{
 		email: {
 			type: String,
@@ -15,12 +26,12 @@ const adminSchema = new Schema(
 		role: {
 			type: String,
 			require: true,
-			default: "admin",
+			default: UserRole.Admin,
 		},
 	},
 	{
 		timestamps: true,
-		versionKey: false
+		versionKey: false,
 	}
 );
 

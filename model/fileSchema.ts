@@ -1,30 +1,41 @@
-import mongoose, { Mongoose } from "mongoose";
+import mongoose, { Mongoose, Types } from "mongoose";
 import { Schema } from "mongoose";
 
-const fileSchema = new Schema({
-	name: {
-		type: String,
-		require: false,
+interface FileSchema {
+	name: string;
+	url: string;
+	key: Types.ObjectId;
+	size: number;
+	contentType: string;
+}
+
+const fileSchema = new Schema<FileSchema>(
+	{
+		name: {
+			type: String,
+			require: false,
+		},
+		url: {
+			type: String,
+			require: true,
+		},
+		key: {
+			require: true,
+		},
+		size: {
+			type: Number,
+			require: true,
+		},
+		contentType: {
+			type: String,
+			require: true,
+		},
 	},
-	url: {
-		type: String,
-		require: true,
-	},
-	key: {
-		type: mongoose.Types.ObjectId,
-		require: true,
-	},
-	size: {
-		type: Number,
-		require: true,
-	},
-	contentType: {
-		type: String,
-		require: true,
-	},
-},{
-	versionKey: false,
-	timestamps: false
-});
+	{
+		versionKey: false,
+		timestamps: false,
+		_id: false,
+	}
+);
 
 export const File = mongoose.model("File", fileSchema);

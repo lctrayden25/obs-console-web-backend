@@ -16,7 +16,6 @@ const fileSchema = new mongoose_2.Schema({
         require: true,
     },
     key: {
-        type: mongoose_1.default.Types.ObjectId,
         require: true,
     },
     size: {
@@ -29,6 +28,7 @@ const fileSchema = new mongoose_2.Schema({
     },
 }, {
     versionKey: false,
-    timestamps: false
+    timestamps: false,
+    _id: false,
 });
 exports.File = mongoose_1.default.model("File", fileSchema);

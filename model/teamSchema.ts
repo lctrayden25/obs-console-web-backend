@@ -1,7 +1,15 @@
 import mongoose, { Mongoose } from "mongoose";
 const { Schema } = mongoose as Mongoose;
 
-const teamSchema = new Schema(
+interface TeamSchema {
+	name: string;
+	memberCount: number;
+	joinAt: Date;
+	updatedBy: string;
+	createdAt: Date
+}
+
+const teamSchema = new Schema<TeamSchema>(
 	{
 		name: {
 			type: String,
