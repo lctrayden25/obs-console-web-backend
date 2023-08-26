@@ -34,7 +34,7 @@ export const createTeam = async (
 	if (!name || !memberCount)
 		return res
 			.status(502)
-			.json({ message: "name or memberCount not provieded." })
+			.json({ message: "Field [name] Or [memberCount] Not Provieded." })
 			.end();
 
 	const createData = {
@@ -91,14 +91,12 @@ export const updateTeam = async (
 			.end();
 
 	const updateTeam = await Team.findByIdAndUpdate(id, { name, memberCount });
-	console.log(updateTeam)
+	console.log(updateTeam);
 
 	if (!updateTeam)
 		return res.status(500).json({ error: "Internal Server Error" });
 
-	return res
-		.status(200)
-		.json({ message: "Update the team data successfully." });
+	return res.status(200).json({ message: "Update Team Data Successfully." });
 };
 
 export const deleteTeam = async (
@@ -115,5 +113,5 @@ export const deleteTeam = async (
 	if (!deleteTeam)
 		return res.status(500).json({ error: "Internal Server Error." });
 
-	return res.status(200).json({ message: "Delete team successfully." });
+	return res.status(200).json({ message: "Delete Team Successfully." });
 };

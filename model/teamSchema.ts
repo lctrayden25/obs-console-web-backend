@@ -1,12 +1,11 @@
-import mongoose, { Mongoose } from "mongoose";
+import mongoose, { Mongoose, Types } from "mongoose";
 const { Schema } = mongoose as Mongoose;
 
 interface TeamSchema {
 	name: string;
 	memberCount: number;
 	joinAt: Date;
-	updatedBy: string;
-	createdAt: Date;
+	updatedBy: unknown;
 }
 
 const teamSchema = new Schema<TeamSchema>(
@@ -22,7 +21,9 @@ const teamSchema = new Schema<TeamSchema>(
 			type: Date,
 		},
 		updatedBy: {
-			type: String,
+			type: Types.ObjectId,
+			ref: "Admin",
+			require: true,
 		},
 	},
 	{

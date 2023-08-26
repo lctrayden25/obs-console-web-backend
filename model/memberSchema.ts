@@ -1,7 +1,26 @@
 import mongoose, { Mongoose, Types } from "mongoose";
 const { Schema } = mongoose as Mongoose;
 
-const memberSchema = new Schema(
+enum Gender {
+	Male = "male",
+	Female = "female",
+}
+
+interface MemberSchema {
+	firstName: string;
+	lastName: string;
+	nickName: string;
+	phone: string;
+	gender: Gender;
+	email: string;
+	yearOfBirth: string;
+	monthOfBirth: string;
+	position: string[];
+	team: unknown;
+	updatedBy: unknown;
+}
+
+const memberSchema = new Schema<MemberSchema>(
 	{
 		firstName: {
 			type: String,
@@ -44,7 +63,6 @@ const memberSchema = new Schema(
 		updatedBy: {
 			type: Types.ObjectId,
 			ref: "Admin",
-			default: "Rayden Li",
 		},
 	},
 	{

@@ -27,7 +27,7 @@ const createTeam = (req, res, next) => __awaiter(void 0, void 0, void 0, functio
     if (!name || !memberCount)
         return res
             .status(502)
-            .json({ message: "name or memberCount not provieded." })
+            .json({ message: "Field [name] Or [memberCount] Not Provieded." })
             .end();
     const createData = {
         name,
@@ -70,9 +70,7 @@ const updateTeam = (req, res, next) => __awaiter(void 0, void 0, void 0, functio
     console.log(updateTeam);
     if (!updateTeam)
         return res.status(500).json({ error: "Internal Server Error" });
-    return res
-        .status(200)
-        .json({ message: "Update the team data successfully." });
+    return res.status(200).json({ message: "Update Team Data Successfully." });
 });
 exports.updateTeam = updateTeam;
 const deleteTeam = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
@@ -82,6 +80,6 @@ const deleteTeam = (req, res, next) => __awaiter(void 0, void 0, void 0, functio
     const deleteTeam = yield teamSchema_1.Team.findByIdAndDelete({ _id: id });
     if (!deleteTeam)
         return res.status(500).json({ error: "Internal Server Error." });
-    return res.status(200).json({ message: "Delete team successfully." });
+    return res.status(200).json({ message: "Delete Team Successfully." });
 });
 exports.deleteTeam = deleteTeam;

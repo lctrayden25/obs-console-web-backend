@@ -4,7 +4,7 @@ import { Schema } from "mongoose";
 interface FileSchema {
 	name: string;
 	url: string;
-	key: Types.ObjectId;
+	key: unknown;
 	size: number;
 	contentType: string;
 }
@@ -20,6 +20,7 @@ const fileSchema = new Schema<FileSchema>(
 			require: true,
 		},
 		key: {
+			type: Types.ObjectId,
 			require: true,
 		},
 		size: {
