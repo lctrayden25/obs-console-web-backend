@@ -32,10 +32,10 @@ export const login = async (
 		return res.status(500).json({ message: "Password is not correct." });
 	}
 
-	const { _id, role, createdAt } = getAdmin ?? {};
+	const { _id, role, name } = getAdmin ?? {};
 
 	const token = jwt.sign(
-		{ data: { _id, role, createdAt } },
+		{ data: { _id, role, name } },
 		process.env.PRIVATE_KEY as string,
 		{ expiresIn: "2 days" }
 	);

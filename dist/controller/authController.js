@@ -28,8 +28,8 @@ const login = (req, res, next) => __awaiter(void 0, void 0, void 0, function* ()
     if (!comparePwd) {
         return res.status(500).json({ message: "Password is not correct." });
     }
-    const { _id, role, createdAt } = getAdmin !== null && getAdmin !== void 0 ? getAdmin : {};
-    const token = jsonwebtoken_1.default.sign({ data: { _id, role, createdAt } }, process.env.PRIVATE_KEY, { expiresIn: "2 days" });
+    const { _id, role, name } = getAdmin !== null && getAdmin !== void 0 ? getAdmin : {};
+    const token = jsonwebtoken_1.default.sign({ data: { _id, role, name } }, process.env.PRIVATE_KEY, { expiresIn: "2 days" });
     if (!token) {
         return res.status(500).json({ message: "Token unavailable." }).end();
     }
