@@ -8,6 +8,7 @@ import {
 	getTeam,
 	updateTeam,
 	deleteTeam,
+	exportTeamlist,
 } from "../controller/teamController";
 
 router.get("/get-team-list", getTeamList);
@@ -21,5 +22,7 @@ router.get("/get-team/:id", getTeam);
 router.put("/update-team/:id", updateTeam);
 
 router.delete("/delete-team/:id", deleteTeam);
+
+router.get("/export-team-list-excel", exportTeamlist);
 
 export { router as teamRouter };

@@ -8,18 +8,29 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.deleteTeam = exports.updateTeam = exports.getTeam = exports.createTeam = exports.getTeamList = void 0;
+exports.exportTeamlist = exports.deleteTeam = exports.updateTeam = exports.getTeam = exports.createTeam = exports.getTeamList = void 0;
 const teamSchema_1 = require("../model/teamSchema");
+const exceljs_1 = __importDefault(require("exceljs"));
+const dayjs_1 = __importDefault(require("dayjs"));
 const getTeamList = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
-    const { page, limit, team } = req === null || req === void 0 ? void 0 : req.query;
-    const getTeamList = yield teamSchema_1.Team.find({
-        name: { $regex: team !== null && team !== void 0 ? team : "", $options: "i" },
-    });
-    return res
-        .status(200)
-        .json({ list: getTeamList, count: getTeamList === null || getTeamList === void 0 ? void 0 : getTeamList.length })
-        .end();
+    const { page, limit, team, joinAtStart, joinAtEnd } = req === null || req === void 0 ? void 0 : req.query;
+    let result = [];
+    if (team === "null" && joinAtStart === "null" && joinAtEnd === "null") {
+        result = yield teamSchema_1.Team.find();
+    }
+    if (team !== "null") {
+        result = yield teamSchema_1.Team.find({ name: { $regex: team, $options: "i" } });
+    }
+    if (joinAtStart !== "null" && joinAtEnd !== "null") {
+        result = yield teamSchema_1.Team.find({
+            joinAt: { $gte: joinAtStart, $lte: joinAtEnd },
+        });
+    }
+    return res.status(200).json({ list: result, count: result === null || result === void 0 ? void 0 : result.length }).end();
 });
 exports.getTeamList = getTeamList;
 const createTeam = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
@@ -32,7 +43,7 @@ const createTeam = (req, res, next) => __awaiter(void 0, void 0, void 0, functio
     const createData = {
         name,
         memberCount,
-        joinAt: joinAt !== null && joinAt !== void 0 ? joinAt : Date.now(),
+        joinAt: joinAt !== null && joinAt !== void 0 ? joinAt : (0, dayjs_1.default)().valueOf(),
         updatedBy: null,
     };
     const createTeam = yield teamSchema_1.Team.create(createData);
@@ -83,3 +94,9 @@ const deleteTeam = (req, res, next) => __awaiter(void 0, void 0, void 0, functio
     return res.status(200).json({ message: "Delete Team Successfully." });
 });
 exports.deleteTeam = deleteTeam;
+const exportTeamlist = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
+    const workbook = new exceljs_1.default.Workbook();
+    const worksheet = workbook.addWorksheet("Team List");
+    return res.status(200).json("download");
+});
+exports.exportTeamlist = exportTeamlist;

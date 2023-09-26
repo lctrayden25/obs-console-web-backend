@@ -1,31 +1,39 @@
-import express, {
-	Express,
-	Request,
-	Response,
-	NextFunction,
-} from "express";
+import express, { Express, Request, Response, NextFunction } from "express";
 import { Team } from "../model/teamSchema";
+import execelJs from "exceljs";
+import dayjs from "dayjs";
 
 type ListTableQuery = {
 	page: number;
 	limit: number;
-	team: string;
+	team: string | null;
+	joinAtStart: string | null;
+	joinAtEnd: string | null;
 };
 
 export const getTeamList = async (
 	req: Request<{}, {}, {}, ListTableQuery>,
 	res: Response,
 	next: NextFunction
-) => {
-	const { page, limit, team } = req?.query;
-	const getTeamList = await Team.find({
-		name: { $regex: team ?? "", $options: "i" },
-	});
+): Promise<any> => {
+	const { page, limit, team, joinAtStart, joinAtEnd } = req?.query;
 
-	return res
-		.status(200)
-		.json({ list: getTeamList, count: getTeamList?.length })
-		.end();
+	let result: any = [];
+	if (team === "null" && joinAtStart === "null" && joinAtEnd === "null") {
+		result = await Team.find();
+	}
+
+	if (team !== "null") {
+		result = await Team.find({ name: { $regex: team, $options: "i" } });
+	}
+
+	if (joinAtStart !== "null" && joinAtEnd !== "null") {
+		result = await Team.find({
+			joinAt: { $gte: joinAtStart, $lte: joinAtEnd },
+		});
+	}
+
+	return res.status(200).json({ list: result, count: result?.length }).end();
 };
 
 export const createTeam = async (
@@ -44,7 +52,7 @@ export const createTeam = async (
 	const createData = {
 		name,
 		memberCount,
-		joinAt: joinAt ?? Date.now(),
+		joinAt: joinAt ?? dayjs().valueOf(),
 		updatedBy: null,
 	};
 
@@ -118,4 +126,15 @@ export const deleteTeam = async (
 		return res.status(500).json({ error: "Internal Server Error." });
 
 	return res.status(200).json({ message: "Delete Team Successfully." });
+};
+
+export const exportTeamlist = async (
+	req: Request,
+	res: Response,
+	next: NextFunction
+) => {
+	const workbook = new execelJs.Workbook();
+	const worksheet = workbook.addWorksheet("Team List");
+
+	return res.status(200).json("download");
 };

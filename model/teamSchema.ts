@@ -4,7 +4,7 @@ const { Schema } = mongoose as Mongoose;
 interface TeamSchema {
 	name: string;
 	memberCount: number;
-	joinAt: Date;
+	joinAt: number;
 	updatedBy: unknown;
 }
 
@@ -18,11 +18,12 @@ const teamSchema = new Schema<TeamSchema>(
 			type: Number,
 		},
 		joinAt: {
-			type: Date,
+			type: Number,
+			default: null
 		},
 		updatedBy: {
 			type: String,
-			require: true,
+			default: null
 		},
 	},
 	{

@@ -15,11 +15,12 @@ const teamSchema = new Schema({
         type: Number,
     },
     joinAt: {
-        type: Date,
+        type: Number,
+        default: null
     },
     updatedBy: {
         type: String,
-        require: true,
+        default: null
     },
 }, {
     timestamps: true,
