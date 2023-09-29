@@ -19,16 +19,18 @@ const dayjs_1 = __importDefault(require("dayjs"));
 const getTeamList = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     const { page, limit, team, joinAtStart, joinAtEnd } = req === null || req === void 0 ? void 0 : req.query;
     let result = [];
-    if (team === "null" && joinAtStart === "null" && joinAtEnd === "null") {
+    if (team === "undefined" && joinAtStart === "null" && joinAtEnd === "null") {
         result = yield teamSchema_1.Team.find();
     }
-    if (team !== "null") {
-        result = yield teamSchema_1.Team.find({ name: { $regex: team, $options: "i" } });
-    }
-    if (joinAtStart !== "null" && joinAtEnd !== "null") {
-        result = yield teamSchema_1.Team.find({
-            joinAt: { $gte: joinAtStart, $lte: joinAtEnd },
-        });
+    else {
+        if (team) {
+            result = yield teamSchema_1.Team.find({ name: { $regex: team !== null && team !== void 0 ? team : "", $options: "i" } });
+        }
+        if (joinAtStart !== "null" && joinAtEnd !== "null") {
+            result = yield teamSchema_1.Team.find({
+                joinAt: { $gte: joinAtStart, $lte: joinAtEnd },
+            });
+        }
     }
     return res.status(200).json({ list: result, count: result === null || result === void 0 ? void 0 : result.length }).end();
 });

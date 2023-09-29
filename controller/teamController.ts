@@ -6,7 +6,7 @@ import dayjs from "dayjs";
 type ListTableQuery = {
 	page: number;
 	limit: number;
-	team: string | null;
+	team: string;
 	joinAtStart: string | null;
 	joinAtEnd: string | null;
 };
@@ -19,18 +19,18 @@ export const getTeamList = async (
 	const { page, limit, team, joinAtStart, joinAtEnd } = req?.query;
 
 	let result: any = [];
-	if (team === "null" && joinAtStart === "null" && joinAtEnd === "null") {
+	if (team === "undefined" && joinAtStart === "null" && joinAtEnd === "null") {
 		result = await Team.find();
-	}
+	} else {
+		if (team) {
+			result = await Team.find({ name: { $regex: team ?? "", $options: "i" } });
+		}
 
-	if (team !== "null") {
-		result = await Team.find({ name: { $regex: team, $options: "i" } });
-	}
-
-	if (joinAtStart !== "null" && joinAtEnd !== "null") {
-		result = await Team.find({
-			joinAt: { $gte: joinAtStart, $lte: joinAtEnd },
-		});
+		if (joinAtStart !== "null" && joinAtEnd !== "null") {
+			result = await Team.find({
+				joinAt: { $gte: joinAtStart, $lte: joinAtEnd },
+			});
+		}
 	}
 
 	return res.status(200).json({ list: result, count: result?.length }).end();
