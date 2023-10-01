@@ -19,8 +19,13 @@ export const getTeamList = async (
 ): Promise<any> => {
 	const { page, limit, team, joinAtStart, joinAtEnd } = req?.query;
 
+	const isFullList = page === undefined || limit === undefined;
+
 	let result: any = [];
-	if (team === "" && joinAtStart === "null" && joinAtEnd === "null") {
+	if (
+		(team === "" && joinAtStart === "null" && joinAtEnd === "null") ||
+		isFullList
+	) {
 		result = await Team.find();
 	} else {
 		if (team !== "") {
@@ -38,7 +43,10 @@ export const getTeamList = async (
 
 	return res
 		.status(200)
-		.json({ list: paginatedResult, count: result?.length })
+		.json({
+			list: isFullList ? result : paginatedResult,
+			count: result?.length,
+		})
 		.end();
 };
 

@@ -4,6 +4,51 @@ import { Member } from "../model/memberSchema";
 import { pagination } from "../helper";
 import { MemberType } from "../type/member";
 
+export const getMemberList = async (
+	req: Request<{}, {}, {}, any>,
+	res: Response,
+	next: NextFunction
+) => {
+	const { page, limit, name } = req?.query;
+
+	const isFullList = page === undefined || limit === undefined;
+
+	let result = [] as any;
+	if (name === "" || isFullList) {
+		result = await Member.find();
+	} else {
+		if (name) {
+			result = await Member.find({
+				$or: [
+					{ lastName: { $regex: name ?? "", $options: "i" } },
+					{ firstName: { $regex: name ?? "", $options: "i" } },
+				],
+			});
+		}
+	}
+
+	const paginatedResult = pagination(page, limit, result);
+
+	return res.status(200).json({
+		list: isFullList ? result : paginatedResult,
+		count: result?.length,
+	});
+};
+
+export const getMember = async (
+	req: Request,
+	res: Response,
+	next: NextFunction
+) => {
+	const { id } = req?.params;
+	if (!id)
+		return res.status(404).json({ error: `Member ID - ${id} Not Found.` });
+
+	const getMember = await Member.findById(id).populate("team");
+
+	return res.status(200).json(getMember);
+};
+
 export const createMember = async (
 	req: Request<{}, MemberType, {}, {}>,
 	res: Response,
@@ -24,47 +69,6 @@ export const createMember = async (
 	return res.status(200).json({ message: "Member Created Successfully." });
 };
 
-export const getMember = async (
-	req: Request,
-	res: Response,
-	next: NextFunction
-) => {
-	const { id } = req?.params;
-	if (!id)
-		return res.status(404).json({ error: `Member ID - ${id} Not Found.` });
-
-	const getMember = await Member.findById(id).populate("team");
-
-	return res.status(200).json(getMember);
-};
-
-export const getMemberList = async (
-	req: Request<{}, {}, {}, any>,
-	res: Response,
-	next: NextFunction
-) => {
-	const { page, limit, name } = req?.query;
-	console.log(page)
-
-	let result = [] as any;
-	if (name === "") {
-		result = await Member.find();
-	} else {
-		if (name) {
-			result = await Member.find({
-				$or: [
-					{ lastName: { $regex: name ?? "", $options: "i" } },
-					{ firstName: { $regex: name ?? "", $options: "i" } },
-				],
-			});
-		}
-	}
-
-	const paginatedResult = pagination(page, limit, result);
-
-	return res.status(200).json({ list: paginatedResult, count: result?.length });
-};
-
 export const updateMember = async (
 	req: Request,
 	res: Response,
@@ -72,6 +76,8 @@ export const updateMember = async (
 ) => {
 	const { id } = req?.params;
 	const memberData = req?.body as MemberType;
+
+	console.log(memberData)
 
 	if (!id)
 		return res.status(404).json({ error: `Member ID - ${id} Not Found.` });

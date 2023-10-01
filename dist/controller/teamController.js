@@ -18,8 +18,10 @@ const exceljs_1 = __importDefault(require("exceljs"));
 const helper_1 = require("../helper");
 const getTeamList = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     const { page, limit, team, joinAtStart, joinAtEnd } = req === null || req === void 0 ? void 0 : req.query;
+    const isFullList = page === undefined || limit === undefined;
     let result = [];
-    if (team === "" && joinAtStart === "null" && joinAtEnd === "null") {
+    if ((team === "" && joinAtStart === "null" && joinAtEnd === "null") ||
+        isFullList) {
         result = yield teamSchema_1.Team.find();
     }
     else {
@@ -35,7 +37,10 @@ const getTeamList = (req, res, next) => __awaiter(void 0, void 0, void 0, functi
     const paginatedResult = (0, helper_1.pagination)(page, limit, result);
     return res
         .status(200)
-        .json({ list: paginatedResult, count: result === null || result === void 0 ? void 0 : result.length })
+        .json({
+        list: isFullList ? result : paginatedResult,
+        count: result === null || result === void 0 ? void 0 : result.length,
+    })
         .end();
 });
 exports.getTeamList = getTeamList;
