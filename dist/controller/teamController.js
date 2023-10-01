@@ -32,8 +32,11 @@ const getTeamList = (req, res, next) => __awaiter(void 0, void 0, void 0, functi
             });
         }
     }
-    const getResult = (0, helper_1.pagination)(page, limit, result);
-    return res.status(200).json({ list: getResult, count: result === null || result === void 0 ? void 0 : result.length }).end();
+    const paginatedResult = (0, helper_1.pagination)(page, limit, result);
+    return res
+        .status(200)
+        .json({ list: paginatedResult, count: result === null || result === void 0 ? void 0 : result.length })
+        .end();
 });
 exports.getTeamList = getTeamList;
 const createTeam = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {

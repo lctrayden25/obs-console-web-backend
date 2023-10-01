@@ -34,9 +34,12 @@ export const getTeamList = async (
 		}
 	}
 
-	const getResult = pagination(page, limit, result);
+	const paginatedResult = pagination(page, limit, result);
 
-	return res.status(200).json({ list: getResult, count: result?.length }).end();
+	return res
+		.status(200)
+		.json({ list: paginatedResult, count: result?.length })
+		.end();
 };
 
 export const createTeam = async (
@@ -139,10 +142,9 @@ export const exportTeamlist = async (
 	res: Response,
 	next: NextFunction
 ) => {
-
 	const teamList = await Team.find();
 	const workbook = new execelJs.Workbook();
-	let teamListSheet = workbook.addWorksheet("Team List"); 
+	let teamListSheet = workbook.addWorksheet("Team List");
 	teamListSheet.state = "visible";
 
 	return res.status(200).json("download");

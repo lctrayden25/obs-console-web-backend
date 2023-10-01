@@ -11,19 +11,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.deleteMember = exports.updateMember = exports.getMemberList = exports.getMember = exports.createMember = void 0;
 const memberSchema_1 = require("../model/memberSchema");
-var Gender;
-(function (Gender) {
-    Gender["Male"] = "male";
-    Gender["Female"] = "female";
-})(Gender || (Gender = {}));
-var PlayerPosition;
-(function (PlayerPosition) {
-    PlayerPosition["PointGuard"] = "pointGuard";
-    PlayerPosition["ShootingGuard"] = "shootingGuard";
-    PlayerPosition["SmallForward"] = "smallForward";
-    PlayerPosition["PowerForward"] = "powerForward";
-    PlayerPosition["Center"] = "center";
-})(PlayerPosition || (PlayerPosition = {}));
+const helper_1 = require("../helper");
 const createMember = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     const memberData = req === null || req === void 0 ? void 0 : req.body;
     const { phone } = memberData !== null && memberData !== void 0 ? memberData : {};
@@ -47,21 +35,26 @@ const getMember = (req, res, next) => __awaiter(void 0, void 0, void 0, function
 });
 exports.getMember = getMember;
 const getMemberList = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
-    const { page, limit, member } = req === null || req === void 0 ? void 0 : req.query;
-    const memberList = yield memberSchema_1.Member.find({
-        lastName: { $regex: member !== null && member !== void 0 ? member : "", $options: "i" },
-    }).populate("team");
-    return res.status(200).json({ list: memberList, count: memberList === null || memberList === void 0 ? void 0 : memberList.length });
+    const { page, limit, name } = req === null || req === void 0 ? void 0 : req.query;
+    console.log(page);
+    let result = [];
+    if (name === "") {
+        result = yield memberSchema_1.Member.find();
+    }
+    else {
+        if (name) {
+            result = yield memberSchema_1.Member.find({
+                $or: [
+                    { lastName: { $regex: name !== null && name !== void 0 ? name : "", $options: "i" } },
+                    { firstName: { $regex: name !== null && name !== void 0 ? name : "", $options: "i" } },
+                ],
+            });
+        }
+    }
+    const paginatedResult = (0, helper_1.pagination)(page, limit, result);
+    return res.status(200).json({ list: paginatedResult, count: result === null || result === void 0 ? void 0 : result.length });
 });
 exports.getMemberList = getMemberList;
-// export const getMemberCount = async (
-// 	req: Request,
-// 	res: Response,
-// 	next: NextFunction
-// ) => {
-// 	const memberList = await Member.find();
-// 	return res.status(200).json(memberList?.length).end();
-// };
 const updateMember = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     const { id } = req === null || req === void 0 ? void 0 : req.params;
     const memberData = req === null || req === void 0 ? void 0 : req.body;

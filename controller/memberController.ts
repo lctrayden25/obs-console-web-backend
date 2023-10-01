@@ -1,32 +1,8 @@
 import express, { Express, Request, Response, NextFunction } from "express";
 import { Types } from "mongoose";
 import { Member } from "../model/memberSchema";
-
-enum Gender {
-	Male = "male",
-	Female = "female",
-}
-
-enum PlayerPosition {
-	PointGuard = "pointGuard",
-	ShootingGuard = "shootingGuard",
-	SmallForward = "smallForward",
-	PowerForward = "powerForward",
-	Center = "center",
-}
-
-type MemberType = {
-	firstName: string;
-	lastName: string;
-	phone: string;
-	gender: Gender;
-	email: string;
-	dateOfYear: number;
-	dateOfMonth: number;
-	position: [PlayerPosition];
-	team: Types.ObjectId;
-	updatedBy: string;
-};
+import { pagination } from "../helper";
+import { MemberType } from "../type/member";
 
 export const createMember = async (
 	req: Request<{}, MemberType, {}, {}>,
@@ -63,27 +39,31 @@ export const getMember = async (
 };
 
 export const getMemberList = async (
-	req: Request,
+	req: Request<{}, {}, {}, any>,
 	res: Response,
 	next: NextFunction
 ) => {
-	const { page, limit, member } = req?.query;
-	const memberList = await Member.find({
-		lastName: { $regex: member ?? "", $options: "i" },
-	}).populate("team");
+	const { page, limit, name } = req?.query;
+	console.log(page)
 
-	return res.status(200).json({ list: memberList, count: memberList?.length });
+	let result = [] as any;
+	if (name === "") {
+		result = await Member.find();
+	} else {
+		if (name) {
+			result = await Member.find({
+				$or: [
+					{ lastName: { $regex: name ?? "", $options: "i" } },
+					{ firstName: { $regex: name ?? "", $options: "i" } },
+				],
+			});
+		}
+	}
+
+	const paginatedResult = pagination(page, limit, result);
+
+	return res.status(200).json({ list: paginatedResult, count: result?.length });
 };
-
-// export const getMemberCount = async (
-// 	req: Request,
-// 	res: Response,
-// 	next: NextFunction
-// ) => {
-// 	const memberList = await Member.find();
-
-// 	return res.status(200).json(memberList?.length).end();
-// };
 
 export const updateMember = async (
 	req: Request,
