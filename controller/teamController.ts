@@ -2,8 +2,9 @@ import express, { Express, Request, Response, NextFunction } from "express";
 import { Team } from "../model/teamSchema";
 import execelJs from "exceljs";
 import dayjs from "dayjs";
+import { pagination } from "../helper";
 
-type ListTableQuery = {
+export type ListTableQuery = {
 	page: number;
 	limit: number;
 	team: string;
@@ -19,10 +20,10 @@ export const getTeamList = async (
 	const { page, limit, team, joinAtStart, joinAtEnd } = req?.query;
 
 	let result: any = [];
-	if (team === "undefined" && joinAtStart === "null" && joinAtEnd === "null") {
+	if (team === "" && joinAtStart === "null" && joinAtEnd === "null") {
 		result = await Team.find();
 	} else {
-		if (team) {
+		if (team !== "") {
 			result = await Team.find({ name: { $regex: team ?? "", $options: "i" } });
 		}
 
@@ -33,7 +34,9 @@ export const getTeamList = async (
 		}
 	}
 
-	return res.status(200).json({ list: result, count: result?.length }).end();
+	const getResult = pagination(page, limit, result);
+
+	return res.status(200).json({ list: getResult, count: result?.length }).end();
 };
 
 export const createTeam = async (
@@ -46,13 +49,13 @@ export const createTeam = async (
 	if (!name || !memberCount)
 		return res
 			.status(502)
-			.json({ message: "Field [name] Or [memberCount] Not Provieded." })
+			.json({ message: "Field [name] Or [memberCount] Not Provided." })
 			.end();
 
 	const createData = {
 		name,
 		memberCount,
-		joinAt: joinAt ?? dayjs().valueOf(),
+		joinAt: joinAt ?? null,
 		updatedBy: null,
 	};
 
@@ -94,7 +97,7 @@ export const updateTeam = async (
 	next: NextFunction
 ) => {
 	const { id } = req.params;
-	const { name, memberCount } = req.body;
+	const { name, memberCount, joinAt } = req.body;
 
 	if (!id)
 		return res
@@ -102,8 +105,11 @@ export const updateTeam = async (
 			.json({ error: "Team ID No Found Or Missing." })
 			.end();
 
-	const updateTeam = await Team.findByIdAndUpdate(id, { name, memberCount });
-	console.log(updateTeam);
+	const updateTeam = await Team.findByIdAndUpdate(id, {
+		name,
+		memberCount,
+		joinAt,
+	});
 
 	if (!updateTeam)
 		return res.status(500).json({ error: "Internal Server Error" });
@@ -133,8 +139,11 @@ export const exportTeamlist = async (
 	res: Response,
 	next: NextFunction
 ) => {
+
+	const teamList = await Team.find();
 	const workbook = new execelJs.Workbook();
-	const worksheet = workbook.addWorksheet("Team List");
+	let teamListSheet = workbook.addWorksheet("Team List"); 
+	teamListSheet.state = "visible";
 
 	return res.status(200).json("download");
 };

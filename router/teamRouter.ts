@@ -1,9 +1,9 @@
 import express, { Express, NextFunction, Request, Response } from "express";
+const app = express();
 const router = express.Router();
 
 import {
 	getTeamList,
-	// getTeamCount,
 	createTeam,
 	getTeam,
 	updateTeam,
@@ -12,8 +12,6 @@ import {
 } from "../controller/teamController";
 
 router.get("/get-team-list", getTeamList);
-
-// router.get("/get-team-count", getTeamCount);
 
 router.post("/create-team", createTeam);
 

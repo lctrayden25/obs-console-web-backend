@@ -14,9 +14,12 @@ dotenv.config();
 const app: Express = express();
 
 const corsOptions = {
-	origin: ["http://localhost:3000", "http://localhost:3001"],
+	origin: [
+		process.env.LOCAL_API_ENDPOINT as string,
+		process.env.LOCAL_SECOND_API_ENDPOINT as string,
+	],
 	methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
-	allowedHeaders: ["Content-Type", "Authorization", ],
+	allowedHeaders: ["Content-Type", "Authorization"],
 	credentials: true,
 };
 
@@ -34,11 +37,12 @@ app.use("/member", memberRouter);
 app.use("/admin", adminRouter);
 app.use("/auth", authRouter);
 
+const PORT = process.env.PORT || 9002;
 const serverConnect = () => {
 	try {
-		app.listen(9000, () => {
+		app.listen(PORT, () => {
 			database();
-			console.log(`⚡️[server]: Server is running at http://localhost:${9000}`);
+			console.log(`⚡️[server]: Server is running at http://localhost:${PORT}`);
 		});
 	} catch (error) {
 		console.log(error);

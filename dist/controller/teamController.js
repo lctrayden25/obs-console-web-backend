@@ -15,15 +15,15 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.exportTeamlist = exports.deleteTeam = exports.updateTeam = exports.getTeam = exports.createTeam = exports.getTeamList = void 0;
 const teamSchema_1 = require("../model/teamSchema");
 const exceljs_1 = __importDefault(require("exceljs"));
-const dayjs_1 = __importDefault(require("dayjs"));
+const helper_1 = require("../helper");
 const getTeamList = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     const { page, limit, team, joinAtStart, joinAtEnd } = req === null || req === void 0 ? void 0 : req.query;
     let result = [];
-    if (team === "undefined" && joinAtStart === "null" && joinAtEnd === "null") {
+    if (team === "" && joinAtStart === "null" && joinAtEnd === "null") {
         result = yield teamSchema_1.Team.find();
     }
     else {
-        if (team) {
+        if (team !== "") {
             result = yield teamSchema_1.Team.find({ name: { $regex: team !== null && team !== void 0 ? team : "", $options: "i" } });
         }
         if (joinAtStart !== "null" && joinAtEnd !== "null") {
@@ -32,7 +32,8 @@ const getTeamList = (req, res, next) => __awaiter(void 0, void 0, void 0, functi
             });
         }
     }
-    return res.status(200).json({ list: result, count: result === null || result === void 0 ? void 0 : result.length }).end();
+    const getResult = (0, helper_1.pagination)(page, limit, result);
+    return res.status(200).json({ list: getResult, count: result === null || result === void 0 ? void 0 : result.length }).end();
 });
 exports.getTeamList = getTeamList;
 const createTeam = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
@@ -40,12 +41,12 @@ const createTeam = (req, res, next) => __awaiter(void 0, void 0, void 0, functio
     if (!name || !memberCount)
         return res
             .status(502)
-            .json({ message: "Field [name] Or [memberCount] Not Provieded." })
+            .json({ message: "Field [name] Or [memberCount] Not Provided." })
             .end();
     const createData = {
         name,
         memberCount,
-        joinAt: joinAt !== null && joinAt !== void 0 ? joinAt : (0, dayjs_1.default)().valueOf(),
+        joinAt: joinAt !== null && joinAt !== void 0 ? joinAt : null,
         updatedBy: null,
     };
     const createTeam = yield teamSchema_1.Team.create(createData);
@@ -73,14 +74,17 @@ const getTeam = (req, res, next) => __awaiter(void 0, void 0, void 0, function* 
 exports.getTeam = getTeam;
 const updateTeam = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     const { id } = req.params;
-    const { name, memberCount } = req.body;
+    const { name, memberCount, joinAt } = req.body;
     if (!id)
         return res
             .status(404)
             .json({ error: "Team ID No Found Or Missing." })
             .end();
-    const updateTeam = yield teamSchema_1.Team.findByIdAndUpdate(id, { name, memberCount });
-    console.log(updateTeam);
+    const updateTeam = yield teamSchema_1.Team.findByIdAndUpdate(id, {
+        name,
+        memberCount,
+        joinAt,
+    });
     if (!updateTeam)
         return res.status(500).json({ error: "Internal Server Error" });
     return res.status(200).json({ message: "Update Team Data Successfully." });
@@ -97,8 +101,10 @@ const deleteTeam = (req, res, next) => __awaiter(void 0, void 0, void 0, functio
 });
 exports.deleteTeam = deleteTeam;
 const exportTeamlist = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
+    const teamList = yield teamSchema_1.Team.find();
     const workbook = new exceljs_1.default.Workbook();
-    const worksheet = workbook.addWorksheet("Team List");
+    let teamListSheet = workbook.addWorksheet("Team List");
+    teamListSheet.state = "visible";
     return res.status(200).json("download");
 });
 exports.exportTeamlist = exportTeamlist;

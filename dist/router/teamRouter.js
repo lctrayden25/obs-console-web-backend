@@ -5,11 +5,11 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.teamRouter = void 0;
 const express_1 = __importDefault(require("express"));
+const app = (0, express_1.default)();
 const router = express_1.default.Router();
 exports.teamRouter = router;
 const teamController_1 = require("../controller/teamController");
 router.get("/get-team-list", teamController_1.getTeamList);
-// router.get("/get-team-count", getTeamCount);
 router.post("/create-team", teamController_1.createTeam);
 router.get("/get-team/:id", teamController_1.getTeam);
 router.put("/update-team/:id", teamController_1.updateTeam);
