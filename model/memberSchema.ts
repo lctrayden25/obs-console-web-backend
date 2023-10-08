@@ -1,10 +1,6 @@
 import mongoose, { Mongoose, Types } from "mongoose";
+import { Gender } from "../type/common";
 const { Schema } = mongoose as Mongoose;
-
-enum Gender {
-	Male = "male",
-	Female = "female",
-}
 
 interface MemberSchema {
 	firstName: string;

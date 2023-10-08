@@ -26,11 +26,6 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.Member = void 0;
 const mongoose_1 = __importStar(require("mongoose"));
 const { Schema } = mongoose_1.default;
-var Gender;
-(function (Gender) {
-    Gender["Male"] = "male";
-    Gender["Female"] = "female";
-})(Gender || (Gender = {}));
 const memberSchema = new Schema({
     firstName: {
         type: String,

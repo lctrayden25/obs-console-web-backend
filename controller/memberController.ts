@@ -15,7 +15,7 @@ export const getMemberList = async (
 
 	let result = [] as any;
 	if (name === "" || isFullList) {
-		result = await Member.find();
+		result = await Member.find().populate("team");
 	} else {
 		if (name) {
 			result = await Member.find({
@@ -27,6 +27,7 @@ export const getMemberList = async (
 		}
 	}
 
+	console.log(result);
 	const paginatedResult = pagination(page, limit, result);
 
 	return res.status(200).json({

@@ -17,7 +17,7 @@ const getMemberList = (req, res, next) => __awaiter(void 0, void 0, void 0, func
     const isFullList = page === undefined || limit === undefined;
     let result = [];
     if (name === "" || isFullList) {
-        result = yield memberSchema_1.Member.find();
+        result = yield memberSchema_1.Member.find().populate("team");
     }
     else {
         if (name) {
@@ -29,6 +29,7 @@ const getMemberList = (req, res, next) => __awaiter(void 0, void 0, void 0, func
             });
         }
     }
+    console.log(result);
     const paginatedResult = (0, helper_1.pagination)(page, limit, result);
     return res.status(200).json({
         list: isFullList ? result : paginatedResult,

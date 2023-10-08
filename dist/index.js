@@ -21,7 +21,7 @@ const corsOptions = {
         process.env.LOCAL_SECOND_API_ENDPOINT,
     ],
     methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
-    allowedHeaders: ["Content-Type", "Authorization"],
+    allowedHeaders: ["Content-Type", "Authorization", "Content-Disposition"],
     credentials: true,
 };
 app.use((0, cors_1.default)(corsOptions));
