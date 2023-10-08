@@ -3,6 +3,8 @@ import { Team } from "../model/teamSchema";
 import execelJs from "exceljs";
 import dayjs from "dayjs";
 import { pagination } from "../helper";
+import fs from "fs";
+import path from "path";
 
 export type ListTableQuery = {
 	page: number;
@@ -152,8 +154,38 @@ export const exportTeamlist = async (
 ) => {
 	const teamList = await Team.find();
 	const workbook = new execelJs.Workbook();
-	let teamListSheet = workbook.addWorksheet("Team List");
-	teamListSheet.state = "visible";
+	const worksheet = workbook.addWorksheet("Team List");
 
-	return res.status(200).json("download");
+	const getFields = teamList?.[0];
+	const columns = Object.getOwnPropertyNames(getFields.toJSON())?.map(
+		(field) => {
+			return {
+				header: field,
+				key: field,
+				width: 30,
+			};
+		}
+	);
+
+	worksheet.columns = columns;
+
+	teamList?.forEach((team) => {
+		worksheet.addRow(team);
+	});
+
+	worksheet.getRow(1).eachCell((cell) => {
+		cell.font = { bold: true };
+	});
+
+	try {
+		await workbook.xlsx.writeFile("team-list.xlsx").then(() => {
+			res.set(
+				"Content-Disposition",
+				"attachment; filename=" + "team-list.xlsx"
+			);
+			res.set(`Content-Type`, `application/octet-stream`);
+		});
+	} catch (error) {
+		console.log(error);
+	}
 };

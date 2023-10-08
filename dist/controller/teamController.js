@@ -109,10 +109,33 @@ const deleteTeam = (req, res, next) => __awaiter(void 0, void 0, void 0, functio
 });
 exports.deleteTeam = deleteTeam;
 const exportTeamlist = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
+    var _b;
     const teamList = yield teamSchema_1.Team.find();
     const workbook = new exceljs_1.default.Workbook();
-    let teamListSheet = workbook.addWorksheet("Team List");
-    teamListSheet.state = "visible";
-    return res.status(200).json("download");
+    const worksheet = workbook.addWorksheet("Team List");
+    const getFields = teamList === null || teamList === void 0 ? void 0 : teamList[0];
+    const columns = (_b = Object.getOwnPropertyNames(getFields.toJSON())) === null || _b === void 0 ? void 0 : _b.map((field) => {
+        return {
+            header: field,
+            key: field,
+            width: 30,
+        };
+    });
+    worksheet.columns = columns;
+    teamList === null || teamList === void 0 ? void 0 : teamList.forEach((team) => {
+        worksheet.addRow(team);
+    });
+    worksheet.getRow(1).eachCell((cell) => {
+        cell.font = { bold: true };
+    });
+    try {
+        yield workbook.xlsx.writeFile("team-list.xlsx").then(() => {
+            res.set("Content-Disposition", "attachment; filename=" + "team-list.xlsx");
+            res.set(`Content-Type`, `application/octet-stream`);
+        });
+    }
+    catch (error) {
+        console.log(error);
+    }
 });
 exports.exportTeamlist = exportTeamlist;
