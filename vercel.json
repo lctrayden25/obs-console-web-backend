@@ -3,9 +3,9 @@
 	"builds": [{ "src": "*.ts", "use": "@vercel/node" }],
 	"routes": [
 		{
-			"src": "/(.*)",
+			"src": "*.ts",
 			"dest": "/"
 		},
-		{ "src": "/team/get-team-list", "dest": "/teamRouter.ts" }
+		{ "src": "/(.*)", "dest": "/" }
 	]
 }
