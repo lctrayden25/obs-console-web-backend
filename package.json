@@ -9,7 +9,7 @@
     "dev": "concurrently \"npx tsc --watch\" \"nodemon -q dist/index.js\""
   },
   "engines": {
-    "node": "20.9.0"
+    "node": "18.x"
   },
   "keywords": [],
   "author": "",
