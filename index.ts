@@ -28,11 +28,9 @@ app.use(cors());
 app.use(cookieParser());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
-// app.use(express.static('public'))
-app.use('/static', express.static(path.join(__dirname, 'public')))
 
 app.get("/", (req: Request, res: Response) => {
-	return res.json("Homepage");
+	return res.json("This is homepage");
 });
 
 app.use("/team", teamRouter);
