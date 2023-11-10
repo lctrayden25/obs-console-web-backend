@@ -9,9 +9,13 @@ import {
 	updateTeam,
 	deleteTeam,
 	exportTeamlist,
+	testing
 } from "../controller/teamController";
+import { tokenToString } from "typescript";
 
 router.get("/get-team-list", getTeamList);
+
+router.get("/test", tokenToString)
 
 router.post("/create-team", createTeam);
 

@@ -189,3 +189,8 @@ export const exportTeamlist = async (
 		console.log(error);
 	}
 };
+
+
+export const testing = (req: Request, res: Response) => {
+	return res.json("testing").status(200)
+}

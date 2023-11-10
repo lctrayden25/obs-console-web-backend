@@ -12,7 +12,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.exportTeamlist = exports.deleteTeam = exports.updateTeam = exports.getTeam = exports.createTeam = exports.getTeamList = void 0;
+exports.testing = exports.exportTeamlist = exports.deleteTeam = exports.updateTeam = exports.getTeam = exports.createTeam = exports.getTeamList = void 0;
 const teamSchema_1 = require("../model/teamSchema");
 const exceljs_1 = __importDefault(require("exceljs"));
 const helper_1 = require("../helper");
@@ -139,3 +139,7 @@ const exportTeamlist = (req, res, next) => __awaiter(void 0, void 0, void 0, fun
     }
 });
 exports.exportTeamlist = exportTeamlist;
+const testing = (req, res) => {
+    return res.json("testing").status(200);
+};
+exports.testing = testing;
