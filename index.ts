@@ -4,6 +4,7 @@ import cors from "cors";
 import bodyParser from "body-parser";
 import database from "./config/Database";
 import cookieParser from "cookie-parser";
+import path from "path"
 
 import { teamRouter } from "./router/teamRouter";
 import { memberRouter } from "./router/memberRouter";
@@ -27,7 +28,8 @@ app.use(cors());
 app.use(cookieParser());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
-app.use(express.static('public'))
+// app.use(express.static('public'))
+app.use('/static', express.static(path.join(__dirname, 'public')))
 
 app.get("/", (req: Request, res: Response) => {
 	return res.json("Homepage");

@@ -9,6 +9,7 @@ const cors_1 = __importDefault(require("cors"));
 const body_parser_1 = __importDefault(require("body-parser"));
 const Database_1 = __importDefault(require("./config/Database"));
 const cookie_parser_1 = __importDefault(require("cookie-parser"));
+const path_1 = __importDefault(require("path"));
 const teamRouter_1 = require("./router/teamRouter");
 const memberRouter_1 = require("./router/memberRouter");
 const adminRouter_1 = require("./router/adminRouter");
@@ -28,7 +29,8 @@ app.use((0, cors_1.default)());
 app.use((0, cookie_parser_1.default)());
 app.use(body_parser_1.default.json());
 app.use(body_parser_1.default.urlencoded({ extended: false }));
-app.use(express_1.default.static('public'));
+// app.use(express.static('public'))
+app.use('/static', express_1.default.static(path_1.default.join(__dirname, 'public')));
 app.get("/", (req, res) => {
     return res.json("Homepage");
 });
