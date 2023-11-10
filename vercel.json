@@ -5,6 +5,7 @@
 		{
 			"src": "/(.*)",
 			"dest": "/"
-		}
+		},
+		{ "src": "/team/", "dest": "/route/teamRouter.ts" }
 	]
 }
