@@ -14,4 +14,3 @@ router.post("/update-member/:id", memberController_1.updateMember);
 router.get("/get-member-list", memberController_1.getMemberList);
 // router.get("/get-member-count", getMemberCount);
 router.delete("/delete-member/:id", memberController_1.deleteMember);
-//# sourceMappingURL=memberRouter.js.map

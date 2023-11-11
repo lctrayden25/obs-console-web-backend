@@ -10,4 +10,3 @@ const pagination = (page, limit, result) => {
     return getResult;
 };
 exports.pagination = pagination;
-//# sourceMappingURL=index.js.map

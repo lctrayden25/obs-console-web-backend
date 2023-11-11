@@ -17,4 +17,3 @@ router.get("/get-team/:id", teamController_1.getTeam);
 router.put("/update-team/:id", teamController_1.updateTeam);
 router.delete("/delete-team/:id", teamController_1.deleteTeam);
 router.get("/export-team-list-excel", teamController_1.exportTeamlist);
-//# sourceMappingURL=teamRouter.js.map

@@ -81,4 +81,3 @@ const deleteMember = (req, res, next) => __awaiter(void 0, void 0, void 0, funct
     return res.status(200).json({ message: "Delete Member Successfully." });
 });
 exports.deleteMember = deleteMember;
-//# sourceMappingURL=memberController.js.map
