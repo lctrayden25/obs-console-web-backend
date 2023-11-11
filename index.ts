@@ -4,13 +4,13 @@ import cors from "cors";
 import bodyParser from "body-parser";
 import database from "./config/Database";
 import cookieParser from "cookie-parser";
-import path from "path"
 
-import { teamRouter } from "./router/teamRouter";
+
 import { memberRouter } from "./router/memberRouter";
 import { adminRouter } from "./router/adminRouter";
 import { authRouter } from "./router/authRouter";
 import { Team } from "./model/teamSchema";
+import { teamRouter } from "./router/teamRouter";
 
 dotenv.config();
 const app: Express = express();

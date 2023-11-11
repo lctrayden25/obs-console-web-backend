@@ -18,11 +18,11 @@ const cors_1 = __importDefault(require("cors"));
 const body_parser_1 = __importDefault(require("body-parser"));
 const Database_1 = __importDefault(require("./config/Database"));
 const cookie_parser_1 = __importDefault(require("cookie-parser"));
-const teamRouter_1 = require("./router/teamRouter");
 const memberRouter_1 = require("./router/memberRouter");
 const adminRouter_1 = require("./router/adminRouter");
 const authRouter_1 = require("./router/authRouter");
 const teamSchema_1 = require("./model/teamSchema");
+const teamRouter_1 = require("./router/teamRouter");
 dotenv_1.default.config();
 const app = (0, express_1.default)();
 const corsOptions = {
