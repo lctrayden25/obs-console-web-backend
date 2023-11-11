@@ -73,4 +73,3 @@ const memberSchema = new Schema({
     versionKey: false,
 });
 exports.Member = mongoose_1.default.model("Member", memberSchema);
-//# sourceMappingURL=memberSchema.js.map

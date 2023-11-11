@@ -143,4 +143,3 @@ const testing = (req, res) => {
     return res.json("testing").status(200);
 };
 exports.testing = testing;
-//# sourceMappingURL=teamController.js.map

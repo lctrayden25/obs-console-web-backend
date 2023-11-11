@@ -14,4 +14,3 @@ var PlayerPosition;
     PlayerPosition["PowerForward"] = "powerForward";
     PlayerPosition["Center"] = "center";
 })(PlayerPosition || (exports.PlayerPosition = PlayerPosition = {}));
-//# sourceMappingURL=common.js.map

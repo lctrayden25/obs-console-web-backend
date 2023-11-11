@@ -68,4 +68,3 @@ const updateAdminPassword = (req, res, next) => __awaiter(void 0, void 0, void 0
     return res.json("Update Password");
 });
 exports.updateAdminPassword = updateAdminPassword;
-//# sourceMappingURL=authController.js.map

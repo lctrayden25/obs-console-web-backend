@@ -62,4 +62,3 @@ const serverConnect = () => {
     }
 };
 serverConnect();
-//# sourceMappingURL=index.js.map
