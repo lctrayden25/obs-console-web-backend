@@ -53,3 +53,4 @@ const fileSchema = new mongoose_2.Schema({
     _id: false,
 });
 exports.File = mongoose_1.default.model("File", fileSchema);
+//# sourceMappingURL=fileSchema.js.map
