@@ -27,3 +27,4 @@ const teamSchema = new Schema({
     versionKey: false,
 });
 exports.Team = mongoose_1.default.model("Team", teamSchema);
+//# sourceMappingURL=teamSchema.js.map

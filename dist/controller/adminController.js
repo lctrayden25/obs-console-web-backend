@@ -38,3 +38,4 @@ const createDefaultAdmin = (req, res, next) => __awaiter(void 0, void 0, void 0,
 exports.createDefaultAdmin = createDefaultAdmin;
 const createAdmin = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () { });
 exports.createAdmin = createAdmin;
+//# sourceMappingURL=adminController.js.map

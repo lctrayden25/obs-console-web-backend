@@ -12,3 +12,4 @@ router.post("/login", authController_1.login);
 router.get("/logout", authController_1.logout);
 router.post("/me", authController_1.authAdmin);
 router.post("/update-password", authController_1.updateAdminPassword);
+//# sourceMappingURL=authRouter.js.map
