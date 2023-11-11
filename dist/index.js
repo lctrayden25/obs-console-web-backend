@@ -1,4 +1,13 @@
 "use strict";
+var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
 var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
@@ -13,6 +22,7 @@ const teamRouter_1 = require("./router/teamRouter");
 const memberRouter_1 = require("./router/memberRouter");
 const adminRouter_1 = require("./router/adminRouter");
 const authRouter_1 = require("./router/authRouter");
+const teamSchema_1 = require("model/teamSchema");
 dotenv_1.default.config();
 const app = (0, express_1.default)();
 const corsOptions = {
@@ -31,9 +41,10 @@ app.use(body_parser_1.default.urlencoded({ extended: false }));
 app.get("/", (req, res) => {
     return res.json("This is homepage");
 });
-app.get("/test", (req, res) => {
-    return res.json("testing");
-});
+app.get("/test", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const testing = yield teamSchema_1.Team.find();
+    return res.json(testing);
+}));
 app.use("/team", teamRouter_1.teamRouter);
 app.use("/member", memberRouter_1.memberRouter);
 app.use("/admin", adminRouter_1.adminRouter);

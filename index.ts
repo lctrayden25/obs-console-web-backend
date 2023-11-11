@@ -10,6 +10,7 @@ import { teamRouter } from "./router/teamRouter";
 import { memberRouter } from "./router/memberRouter";
 import { adminRouter } from "./router/adminRouter";
 import { authRouter } from "./router/authRouter";
+import { Team } from "model/teamSchema";
 
 dotenv.config();
 const app: Express = express();
@@ -33,8 +34,9 @@ app.get("/", (req: Request, res: Response) => {
 	return res.json("This is homepage");
 });
 
-app.get("/test", (req: Request, res: Response) => {
-	return res.json("testing")
+app.get("/test", async (req: Request, res: Response) => {
+	const testing = await Team.find();
+	return res.json(testing);
 })
 
 app.use("/team", teamRouter);
