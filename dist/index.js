@@ -22,7 +22,7 @@ const teamRouter_1 = require("./router/teamRouter");
 const memberRouter_1 = require("./router/memberRouter");
 const adminRouter_1 = require("./router/adminRouter");
 const authRouter_1 = require("./router/authRouter");
-const teamSchema_1 = require("model/teamSchema");
+const teamSchema_1 = require("./model/teamSchema");
 dotenv_1.default.config();
 const app = (0, express_1.default)();
 const corsOptions = {

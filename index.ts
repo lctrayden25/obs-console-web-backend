@@ -10,7 +10,7 @@ import { teamRouter } from "./router/teamRouter";
 import { memberRouter } from "./router/memberRouter";
 import { adminRouter } from "./router/adminRouter";
 import { authRouter } from "./router/authRouter";
-import { Team } from "model/teamSchema";
+import { Team } from "./model/teamSchema";
 
 dotenv.config();
 const app: Express = express();
