@@ -33,6 +33,10 @@ app.get("/", (req: Request, res: Response) => {
 	return res.json("This is homepage");
 });
 
+app.get("/test", (req: Request, res: Response) => {
+	return res.json("testing")
+})
+
 app.use("/team", teamRouter);
 app.use("/member", memberRouter);
 app.use("/admin", adminRouter);

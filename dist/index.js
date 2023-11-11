@@ -31,6 +31,9 @@ app.use(body_parser_1.default.urlencoded({ extended: false }));
 app.get("/", (req, res) => {
     return res.json("This is homepage");
 });
+app.get("/test", (req, res) => {
+    return res.json("testing");
+});
 app.use("/team", teamRouter_1.teamRouter);
 app.use("/member", memberRouter_1.memberRouter);
 app.use("/admin", adminRouter_1.adminRouter);
