@@ -44,10 +44,10 @@ app.use("/admin", adminRouter);
 app.use("/auth", authRouter);
 
 const PORT = process.env.PORT || 9002;
-const serverConnect = () => {
+const serverConnect = async () => {
 	try {
+		await database();
 		app.listen(PORT, () => {
-			database();
 			console.log(`⚡️[server]: Server is running at http://localhost:${PORT}`);
 		});
 	} catch (error) {
