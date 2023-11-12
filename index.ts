@@ -5,7 +5,6 @@ import bodyParser from "body-parser";
 import database from "./config/Database";
 import cookieParser from "cookie-parser";
 
-
 import { memberRouter } from "./router/memberRouter";
 import { adminRouter } from "./router/adminRouter";
 import { authRouter } from "./router/authRouter";
@@ -36,7 +35,7 @@ app.get("/", (req: Request, res: Response) => {
 app.get("/test", async (req: Request, res: Response) => {
 	const testing = await Team.find();
 	return res.json(testing);
-})
+});
 
 app.use("/team", teamRouter);
 app.use("/member", memberRouter);
@@ -44,15 +43,8 @@ app.use("/admin", adminRouter);
 app.use("/auth", authRouter);
 
 const PORT = process.env.PORT || 9002;
-const serverConnect = async () => {
-	try {
-		await database();
-		app.listen(PORT, () => {
-			console.log(`⚡️[server]: Server is running at http://localhost:${PORT}`);
-		});
-	} catch (error) {
-		console.log(error);
-	}
-};
 
-serverConnect();
+app.listen(PORT, () => {
+	database();
+	console.log(`⚡️[server]: Server is running at http://localhost:${PORT}`);
+});
