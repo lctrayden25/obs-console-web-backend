@@ -14,7 +14,6 @@ import { teamRouter } from "./router/teamRouter";
 
 dotenv.config();
 const app: Express = express();
-
 const corsOptions = {
 	origin: [
 		process.env.LOCAL_API_ENDPOINT as string,
