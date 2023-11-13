@@ -8,8 +8,6 @@ import {
 	getTeam,
 	updateTeam,
 	deleteTeam,
-	exportTeamlist,
-	testing
 } from "../controller/teamController";
 import { tokenToString } from "typescript";
 
@@ -25,6 +23,5 @@ router.put("/update-team/:id", updateTeam);
 
 router.delete("/delete-team/:id", deleteTeam);
 
-router.get("/export-team-list-excel", exportTeamlist);
 
 export { router as teamRouter };

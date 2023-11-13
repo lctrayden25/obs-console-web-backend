@@ -13,15 +13,15 @@ import { teamRouter } from "./router/teamRouter";
 
 dotenv.config();
 const app: Express = express();
-const corsOptions = {
-	origin: [
-		process.env.LOCAL_API_ENDPOINT as string,
-		process.env.LOCAL_SECOND_API_ENDPOINT as string,
-	],
-	methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
-	allowedHeaders: ["Content-Type", "Authorization", "Content-Disposition"],
-	credentials: true,
-};
+// const corsOptions = {
+// 	origin: [
+// 		process.env.LOCAL_API_ENDPOINT as string,
+// 		process.env.LOCAL_SECOND_API_ENDPOINT as string,
+// 	],
+// 	methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
+// 	allowedHeaders: ["Content-Type", "Authorization", "Content-Disposition"],
+// 	credentials: true,
+// };
 
 app.use(cors());
 app.use(cookieParser());
@@ -29,12 +29,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 
 app.get("/", (req: Request, res: Response) => {
-	return res.json("This is homepage");
-});
-
-app.get("/test", async (req: Request, res: Response) => {
-	const testing = await Team.find();
-	return res.json(testing);
+	return res.json("Initial Page");
 });
 
 app.use("/team", teamRouter);
