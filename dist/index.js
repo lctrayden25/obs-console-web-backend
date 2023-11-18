@@ -1,13 +1,4 @@
 "use strict";
-var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
-    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
-    return new (P || (P = Promise))(function (resolve, reject) {
-        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
-        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
-        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
-        step((generator = generator.apply(thisArg, _arguments || [])).next());
-    });
-};
 var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
@@ -21,44 +12,28 @@ const cookie_parser_1 = __importDefault(require("cookie-parser"));
 const memberRouter_1 = require("./router/memberRouter");
 const adminRouter_1 = require("./router/adminRouter");
 const authRouter_1 = require("./router/authRouter");
-const teamSchema_1 = require("./model/teamSchema");
 const teamRouter_1 = require("./router/teamRouter");
 dotenv_1.default.config();
 const app = (0, express_1.default)();
-const corsOptions = {
-    origin: [
-        process.env.LOCAL_API_ENDPOINT,
-        process.env.LOCAL_SECOND_API_ENDPOINT,
-    ],
-    methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
-    allowedHeaders: ["Content-Type", "Authorization", "Content-Disposition"],
-    credentials: true,
-};
+// const corsOptions = {
+// 	origin: "*",
+// 	// methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
+// 	// allowedHeaders: ["Content-Type", "Authorization", "Content-Disposition"],
+// 	credentials: true,
+// };
 app.use((0, cors_1.default)());
 app.use((0, cookie_parser_1.default)());
 app.use(body_parser_1.default.json());
 app.use(body_parser_1.default.urlencoded({ extended: false }));
 app.get("/", (req, res) => {
-    return res.json("This is homepage");
+    return res.json("Initial Page");
 });
-app.get("/test", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const testing = yield teamSchema_1.Team.find();
-    return res.json(testing);
-}));
 app.use("/team", teamRouter_1.teamRouter);
 app.use("/member", memberRouter_1.memberRouter);
 app.use("/admin", adminRouter_1.adminRouter);
 app.use("/auth", authRouter_1.authRouter);
 const PORT = process.env.PORT || 9002;
-const serverConnect = () => {
-    try {
-        app.listen(PORT, () => {
-            (0, Database_1.default)();
-            console.log(`⚡️[server]: Server is running at http://localhost:${PORT}`);
-        });
-    }
-    catch (error) {
-        console.log(error);
-    }
-};
-serverConnect();
+app.listen(PORT, () => {
+    (0, Database_1.default)();
+    console.log(`⚡️[server]: Server is running at http://localhost:${PORT}`);
+});

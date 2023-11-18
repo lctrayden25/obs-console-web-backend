@@ -14,12 +14,9 @@ import { teamRouter } from "./router/teamRouter";
 dotenv.config();
 const app: Express = express();
 // const corsOptions = {
-// 	origin: [
-// 		process.env.LOCAL_API_ENDPOINT as string,
-// 		process.env.LOCAL_SECOND_API_ENDPOINT as string,
-// 	],
-// 	methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
-// 	allowedHeaders: ["Content-Type", "Authorization", "Content-Disposition"],
+// 	origin: "*",
+// 	// methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
+// 	// allowedHeaders: ["Content-Type", "Authorization", "Content-Disposition"],
 // 	credentials: true,
 // };
 

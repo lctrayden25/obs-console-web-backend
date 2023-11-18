@@ -8,13 +8,9 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.testing = exports.exportTeamlist = exports.deleteTeam = exports.updateTeam = exports.getTeam = exports.createTeam = exports.getTeamList = void 0;
+exports.deleteTeam = exports.updateTeam = exports.getTeam = exports.createTeam = exports.getTeamList = void 0;
 const teamSchema_1 = require("../model/teamSchema");
-const exceljs_1 = __importDefault(require("exceljs"));
 const helper_1 = require("../helper");
 const getTeamList = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     const { page, limit, team, joinAtStart, joinAtEnd } = req === null || req === void 0 ? void 0 : req.query;
@@ -108,38 +104,3 @@ const deleteTeam = (req, res, next) => __awaiter(void 0, void 0, void 0, functio
     return res.status(200).json({ message: "Delete Team Successfully." });
 });
 exports.deleteTeam = deleteTeam;
-const exportTeamlist = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
-    var _b;
-    const teamList = yield teamSchema_1.Team.find();
-    const workbook = new exceljs_1.default.Workbook();
-    const worksheet = workbook.addWorksheet("Team List");
-    const getFields = teamList === null || teamList === void 0 ? void 0 : teamList[0];
-    const columns = (_b = Object.getOwnPropertyNames(getFields.toJSON())) === null || _b === void 0 ? void 0 : _b.map((field) => {
-        return {
-            header: field,
-            key: field,
-            width: 30,
-        };
-    });
-    worksheet.columns = columns;
-    teamList === null || teamList === void 0 ? void 0 : teamList.forEach((team) => {
-        worksheet.addRow(team);
-    });
-    worksheet.getRow(1).eachCell((cell) => {
-        cell.font = { bold: true };
-    });
-    try {
-        yield workbook.xlsx.writeFile("team-list.xlsx").then(() => {
-            res.set("Content-Disposition", "attachment; filename=" + "team-list.xlsx");
-            res.set(`Content-Type`, `application/octet-stream`);
-        });
-    }
-    catch (error) {
-        console.log(error);
-    }
-});
-exports.exportTeamlist = exportTeamlist;
-const testing = (req, res) => {
-    return res.json("testing").status(200);
-};
-exports.testing = testing;
