@@ -15,13 +15,17 @@ const authRouter_1 = require("./router/authRouter");
 const teamRouter_1 = require("./router/teamRouter");
 dotenv_1.default.config();
 const app = (0, express_1.default)();
-// const corsOptions = {
-// 	origin: "*",
-// 	// methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
-// 	// allowedHeaders: ["Content-Type", "Authorization", "Content-Disposition"],
-// 	credentials: true,
-// };
-app.use((0, cors_1.default)());
+const corsOptions = {
+    origin: [
+        process.env.SERVER_API_UR,
+        process.env.LOCAL_API_ENDPOINT,
+        process.env.LOCAL_SECOND_API_ENDPOINT,
+    ],
+    methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
+    allowedHeaders: ["Content-Type", "Authorization", "Content-Disposition"],
+    credentials: true,
+};
+app.use((0, cors_1.default)(corsOptions));
 app.use((0, cookie_parser_1.default)());
 app.use(body_parser_1.default.json());
 app.use(body_parser_1.default.urlencoded({ extended: false }));

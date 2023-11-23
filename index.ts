@@ -13,14 +13,18 @@ import { teamRouter } from "./router/teamRouter";
 
 dotenv.config();
 const app: Express = express();
-// const corsOptions = {
-// 	origin: "*",
-// 	// methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
-// 	// allowedHeaders: ["Content-Type", "Authorization", "Content-Disposition"],
-// 	credentials: true,
-// };
+const corsOptions = {
+	origin: [
+		process.env.SERVER_API_UR as string,
+		process.env.LOCAL_API_ENDPOINT as string,
+		process.env.LOCAL_SECOND_API_ENDPOINT as string,
+	],
+	methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
+	allowedHeaders: ["Content-Type", "Authorization", "Content-Disposition"],
+	credentials: true,
+};
 
-app.use(cors());
+app.use(cors(corsOptions));
 app.use(cookieParser());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
