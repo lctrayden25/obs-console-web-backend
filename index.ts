@@ -8,7 +8,6 @@ import cookieParser from "cookie-parser";
 import { memberRouter } from "./router/memberRouter";
 import { adminRouter } from "./router/adminRouter";
 import { authRouter } from "./router/authRouter";
-import { Team } from "./model/teamSchema";
 import { teamRouter } from "./router/teamRouter";
 
 dotenv.config();
