@@ -17,10 +17,9 @@ dotenv_1.default.config();
 const app = (0, express_1.default)();
 const corsOptions = {
     origin: [
-        "https://obs-console-server.raydenlog.com",
-        "https://obs-console.raydenlog.com",
-        process.env.LOCAL_API_ENDPOINT,
-        process.env.LOCAL_SECOND_API_ENDPOINT,
+        process.env.CLIENT_ORIGIN_URL,
+        process.env.LOCAL_API_FIRST_TEST_ENDPOINT,
+        process.env.LOCAL_API_SECOND_TEST_ENDPOINT,
     ],
     methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
     allowedHeaders: ["Content-Type", "Authorization", "Content-Disposition"],
