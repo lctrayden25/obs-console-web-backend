@@ -18,6 +18,7 @@ const app = (0, express_1.default)();
 const corsOptions = {
     origin: [
         "https://obs-console-server.raydenlog.com",
+        "https://obs-console.raydenlog.com",
         process.env.LOCAL_API_ENDPOINT,
         process.env.LOCAL_SECOND_API_ENDPOINT,
     ],
