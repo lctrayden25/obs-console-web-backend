@@ -14,7 +14,7 @@ dotenv.config();
 const app: Express = express();
 const corsOptions = {
 	origin: [
-		process.env.SERVER_API_URL as string,
+		"https://obs-console-server.raydenlog.com",
 		process.env.LOCAL_API_ENDPOINT as string,
 		process.env.LOCAL_SECOND_API_ENDPOINT as string,
 	],
