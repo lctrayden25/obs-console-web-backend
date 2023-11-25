@@ -33,7 +33,7 @@ const login = (req, res, next) => __awaiter(void 0, void 0, void 0, function* ()
     if (!token) {
         return res.status(500).json({ message: "Token unavailable." }).end();
     }
-    res.cookie("token", token, {
+    res.cookie("obs_token", token, {
         httpOnly: true,
         secure: true,
         sameSite: "lax",
@@ -45,7 +45,7 @@ const login = (req, res, next) => __awaiter(void 0, void 0, void 0, function* ()
 });
 exports.login = login;
 const logout = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
-    res.clearCookie("token");
+    res.clearCookie("obs_token");
     res
         .status(200)
         .json({ message: "The user has been logged out", isLgoin: false });
@@ -53,14 +53,14 @@ const logout = (req, res, next) => __awaiter(void 0, void 0, void 0, function* (
 });
 exports.logout = logout;
 const authAdmin = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
-    const { token } = req.cookies;
-    if (!token) {
+    const { obs_token } = req.cookies;
+    if (!obs_token) {
         return res
             .status(502)
             .json({ message: "Admin authenication failed." })
             .end();
     }
-    const auth = jsonwebtoken_1.default.verify(token, process.env.PRIVATE_KEY);
+    const auth = jsonwebtoken_1.default.verify(obs_token, process.env.PRIVATE_KEY);
     return res.status(200).json({ auth }).end();
 });
 exports.authAdmin = authAdmin;

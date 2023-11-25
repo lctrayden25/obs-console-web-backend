@@ -44,7 +44,7 @@ export const login = async (
 		return res.status(500).json({ message: "Token unavailable." }).end();
 	}
 
-	res.cookie("token", token, {
+	res.cookie("obs_token", token, {
 		httpOnly: true,
 		secure: true,
 		sameSite: "lax",
@@ -60,7 +60,7 @@ export const logout = async (
 	res: Response,
 	next: NextFunction
 ) => {
-	res.clearCookie("token");
+	res.clearCookie("obs_token");
 	res
 		.status(200)
 		.json({ message: "The user has been logged out", isLgoin: false });
@@ -73,16 +73,16 @@ export const authAdmin = async (
 	res: Response,
 	next: NextFunction
 ) => {
-	const { token } = req.cookies;
+	const { obs_token } = req.cookies;
 
-	if (!token) {
+	if (!obs_token) {
 		return res
 			.status(502)
 			.json({ message: "Admin authenication failed." })
 			.end();
 	}
 
-	const auth = jwt.verify(token, process.env.PRIVATE_KEY as string);
+	const auth = jwt.verify(obs_token, process.env.PRIVATE_KEY as string);
 
 	return res.status(200).json({ auth }).end();
 };
