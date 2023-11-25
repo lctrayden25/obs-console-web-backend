@@ -37,6 +37,7 @@ const login = (req, res, next) => __awaiter(void 0, void 0, void 0, function* ()
         httpOnly: true,
         secure: true,
         sameSite: "lax",
+        path: "/"
     });
     res
         .status(200)
