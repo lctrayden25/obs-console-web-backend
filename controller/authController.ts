@@ -48,6 +48,7 @@ export const login = async (
 		httpOnly: true,
 		secure: true,
 		sameSite: "lax",
+		path: "/"
 	});
 	res
 		.status(200)
