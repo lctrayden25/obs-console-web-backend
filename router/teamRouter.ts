@@ -14,8 +14,6 @@ import { verifyAdmin } from "../middleware/verifyAdmin";
 
 router.get("/get-team-list", getTeamList);
 
-router.get("/test", tokenToString)
-
 router.post("/create-team", verifyAdmin, createTeam);
 
 router.get("/get-team/:id", verifyAdmin, getTeam);

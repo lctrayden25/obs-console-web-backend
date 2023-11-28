@@ -11,8 +11,8 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.verifyAdmin = void 0;
 const verifyAdmin = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
-    const { token } = req.cookies;
-    if (!token) {
+    const { obs_token } = req.cookies;
+    if (!obs_token) {
         res.status(403);
         throw new Error("403 Forbidden");
     }

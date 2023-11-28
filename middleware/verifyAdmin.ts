@@ -5,8 +5,8 @@ export const verifyAdmin = async (
 	res: Response,
 	next: NextFunction
 ) => {
-	const { token } = req.cookies;
-	if (!token) {
+	const { obs_token } = req.cookies;
+	if (!obs_token) {
 		res.status(403);
 		throw new Error("403 Forbidden");
 	}
