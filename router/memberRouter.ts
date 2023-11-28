@@ -9,17 +9,18 @@ import {
 	// getMemberCount,
 	deleteMember,
 } from "../controller/memberController";
+import { verifyAdmin } from "../middleware/verifyAdmin";
 
-router.post("/create-member", createMember);
+router.post("/create-member", verifyAdmin, createMember);
 
-router.get("/get-member/:id", getMember);
+router.get("/get-member/:id",verifyAdmin, getMember);
 
-router.post("/update-member/:id", updateMember);
+router.post("/update-member/:id", verifyAdmin, updateMember);
 
-router.get("/get-member-list", getMemberList);
+router.get("/get-member-list", verifyAdmin,  getMemberList);
 
 // router.get("/get-member-count", getMemberCount);
 
-router.delete("/delete-member/:id", deleteMember);
+router.delete("/delete-member/:id", verifyAdmin, deleteMember);
 
 export { router as memberRouter };

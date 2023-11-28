@@ -10,18 +10,19 @@ import {
 	deleteTeam,
 } from "../controller/teamController";
 import { tokenToString } from "typescript";
+import { verifyAdmin } from "../middleware/verifyAdmin";
 
 router.get("/get-team-list", getTeamList);
 
 router.get("/test", tokenToString)
 
-router.post("/create-team", createTeam);
+router.post("/create-team", verifyAdmin, createTeam);
 
-router.get("/get-team/:id", getTeam);
+router.get("/get-team/:id", verifyAdmin, getTeam);
 
-router.put("/update-team/:id", updateTeam);
+router.put("/update-team/:id",verifyAdmin,  updateTeam);
 
-router.delete("/delete-team/:id", deleteTeam);
+router.delete("/delete-team/:id",verifyAdmin, deleteTeam);
 
 
 export { router as teamRouter };
