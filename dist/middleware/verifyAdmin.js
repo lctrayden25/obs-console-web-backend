@@ -13,8 +13,7 @@ exports.verifyAdmin = void 0;
 const verifyAdmin = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     const { obs_token } = req.cookies;
     if (!obs_token) {
-        res.json("403 Forbidden - Token not found").status(403);
-        throw new Error("403 Forbidden");
+        return res.json({ error: "403 Forbidden - Token not found" }).status(403);
     }
     next();
 });
