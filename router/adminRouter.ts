@@ -4,7 +4,7 @@ const router = express.Router();
 import { createAdmin, createDefaultAdmin } from "../controller/adminController";
 import { verifyAdmin } from "../middleware/verifyAdmin";
 
-router.post("/create-admin", createAdmin);
+router.post("/create-admin", verifyAdmin, createAdmin);
 
 router.post("/create-default-admin", createDefaultAdmin);
 

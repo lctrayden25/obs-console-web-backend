@@ -9,7 +9,6 @@ import {
 	updateTeam,
 	deleteTeam,
 } from "../controller/teamController";
-import { tokenToString } from "typescript";
 import { verifyAdmin } from "../middleware/verifyAdmin";
 
 router.get("/get-team-list", verifyAdmin, getTeamList);

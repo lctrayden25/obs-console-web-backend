@@ -1,10 +1,6 @@
 import express, { Express, Request, Response, NextFunction } from "express";
 import { Team } from "../model/teamSchema";
-import execelJs from "exceljs";
-import dayjs from "dayjs";
 import { pagination } from "../helper";
-import fs from "fs";
-import path from "path";
 
 export type ListTableQuery = {
 	page: number;
