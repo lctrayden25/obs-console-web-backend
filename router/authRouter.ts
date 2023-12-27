@@ -7,6 +7,7 @@ import {
 	authAdmin,
 	updateAdminPassword,
 } from "../controller/authController";
+import { verifyAdmin } from "../middleware/verifyAdmin";
 
 router.post("/login", login);
 
@@ -14,6 +15,6 @@ router.get("/logout", logout);
 
 router.post("/me", authAdmin);
 
-router.post("/update-password", updateAdminPassword);
+router.post("/update-password", verifyAdmin, updateAdminPassword);
 
 export { router as authRouter };

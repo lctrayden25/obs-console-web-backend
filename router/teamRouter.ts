@@ -12,7 +12,7 @@ import {
 import { tokenToString } from "typescript";
 import { verifyAdmin } from "../middleware/verifyAdmin";
 
-router.get("/get-team-list", getTeamList);
+router.get("/get-team-list", verifyAdmin, getTeamList);
 
 router.post("/create-team", verifyAdmin, createTeam);
 

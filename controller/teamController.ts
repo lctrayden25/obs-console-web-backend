@@ -15,7 +15,7 @@ export type ListTableQuery = {
 };
 
 export const getTeamList = async (
-	req: Request<{}, {}, {}, ListTableQuery>,
+	req: Request<any, any, any, ListTableQuery | any>,
 	res: Response,
 	next: NextFunction
 ): Promise<any> => {
