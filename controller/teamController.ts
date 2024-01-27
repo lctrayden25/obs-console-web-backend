@@ -1,6 +1,7 @@
 import express, { Express, Request, Response, NextFunction } from "express";
 import { Team } from "../model/teamSchema";
 import { pagination } from "../helper";
+const CsvParser = require("json2csv").Parser;
 
 export type ListTableQuery = {
 	page: number;
@@ -141,4 +142,19 @@ export const deleteTeam = async (
 		return res.status(500).json({ error: "Internal Server Error." });
 
 	return res.status(200).json({ message: "Delete Team Successfully." });
+};
+
+export const exportTeamList = async (
+	req: Request,
+	res: Response,
+	next: NextFunction
+) => {
+	try {
+		return res.json("exporting")
+	} catch (error) {
+		if (error instanceof Error) {
+			console.log("Error");
+			throw new Error(error.message);
+		}
+	}
 };

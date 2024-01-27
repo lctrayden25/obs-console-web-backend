@@ -29,7 +29,6 @@ const getMemberList = (req, res, next) => __awaiter(void 0, void 0, void 0, func
             });
         }
     }
-    console.log(result);
     const paginatedResult = (0, helper_1.pagination)(page, limit, result);
     return res.status(200).json({
         list: isFullList ? result : paginatedResult,
@@ -62,7 +61,6 @@ exports.createMember = createMember;
 const updateMember = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     const { id } = req === null || req === void 0 ? void 0 : req.params;
     const memberData = req === null || req === void 0 ? void 0 : req.body;
-    console.log(memberData);
     if (!id)
         return res.status(404).json({ error: `Member ID - ${id} Not Found.` });
     const updateMember = yield memberSchema_1.Member.findByIdAndUpdate(id, memberData);

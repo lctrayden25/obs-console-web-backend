@@ -9,9 +9,10 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.deleteTeam = exports.updateTeam = exports.getTeam = exports.createTeam = exports.getTeamList = void 0;
+exports.exportTeamList = exports.deleteTeam = exports.updateTeam = exports.getTeam = exports.createTeam = exports.getTeamList = void 0;
 const teamSchema_1 = require("../model/teamSchema");
 const helper_1 = require("../helper");
+const CsvParser = require("json2csv").Parser;
 const getTeamList = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     const { page, limit, team, joinAtStart, joinAtEnd } = req === null || req === void 0 ? void 0 : req.query;
     const isFullList = page === undefined || limit === undefined;
@@ -104,3 +105,15 @@ const deleteTeam = (req, res, next) => __awaiter(void 0, void 0, void 0, functio
     return res.status(200).json({ message: "Delete Team Successfully." });
 });
 exports.deleteTeam = deleteTeam;
+const exportTeamList = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        return res.json("exporting");
+    }
+    catch (error) {
+        if (error instanceof Error) {
+            console.log("Error");
+            throw new Error(error.message);
+        }
+    }
+});
+exports.exportTeamList = exportTeamList;
